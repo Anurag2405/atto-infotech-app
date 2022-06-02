@@ -21,6 +21,7 @@ class _InfoformState extends State<Infoform> {
       decoration: InputDecoration(
         labelText: "Name",
         border: OutlineInputBorder(),
+        suffixIcon: Icon(Icons.person),
       ),
       validator: (value){
         if (value!.length < 4){
@@ -38,6 +39,7 @@ class _InfoformState extends State<Infoform> {
       decoration: InputDecoration(
         labelText: "Phone",
         border: OutlineInputBorder(),
+        suffixIcon: Icon(Icons.phone),
       ),
       keyboardType: TextInputType.number,
       validator: (value){
@@ -57,6 +59,7 @@ class _InfoformState extends State<Infoform> {
     decoration: InputDecoration(
       labelText: 'Email',
       border: OutlineInputBorder(),
+      suffixIcon: Icon(Icons.email),
     ),
     validator: (value) {
       final pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
@@ -74,21 +77,24 @@ class _InfoformState extends State<Infoform> {
     onChanged: (value) => setState(() => email = value),
   );
 
-  Widget buildSubmit() => ElevatedButton(
-    child: Text(
-      "Submit",
-      style: TextStyle(fontSize: 24),
+  Widget buildSubmit() => SizedBox(
+    height: 50,
+    child: ElevatedButton(
+      child: Text(
+        "Submit",
+        style: TextStyle(fontSize: 24),
+      ),
+      onPressed: (){
+        final isValid = formKey.currentState!.validate();
+        if(isValid){
+          print(name);
+          print(email);
+          print(phone_number);
+          print(dropval);
+          print(expDate);
+        }
+      },
     ),
-    onPressed: (){
-      final isValid = formKey.currentState!.validate();
-      if(isValid){
-        print(name);
-        print(email);
-        print(phone_number);
-        print(dropval);
-        print(expDate);
-      }
-    },
   );
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
@@ -100,14 +106,23 @@ class _InfoformState extends State<Infoform> {
 
   Widget buildDrop() => Container(
     decoration: BoxDecoration(
-      border: Border.all(),
+      border: Border.all(color: Colors.grey),
       borderRadius: BorderRadius.circular(4),
     ),
     child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: DropdownButton<String>(
-
+      padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+            border: InputBorder.none),
+        validator: (value){
+          if (value == null){
+            return "Please select a service";
+          } else {
+            return null;
+          }
+        },
           value: dropval,
+          hint: Text("Choose type of service"),
           isExpanded: true,
           iconSize: 36,
           icon: Icon(Icons.arrow_drop_down),
@@ -118,22 +133,28 @@ class _InfoformState extends State<Infoform> {
   );
 
 
-  Widget buildexp() => ListTile(
-    title: Text(expDate == null ? "Pick the expiry date" : expDate.toString()),
-    trailing: Icon(Icons.arrow_drop_down),
-    onTap: () {
-      showDatePicker(
-        context: context,
-        firstDate: DateTime(2015),
-        lastDate: DateTime(2099),
-        initialDate: expDate == null ? DateTime.now() : expDate!,
-      ).then((date) {
-        setState(() {
-          expDate = date;
-        });
-      }
-      );
-    },
+  Widget buildexp() => Container(
+    decoration: BoxDecoration(
+      border:  Border.all(color: Colors.grey),
+      borderRadius: BorderRadius.circular(4),
+    ),
+    child: ListTile(
+      title: Text(expDate == null ? "Pick the expiry date" : expDate.toString(),style: TextStyle(color: Colors.grey[600]),),
+      trailing: Icon(Icons.calendar_month_outlined),
+      onTap: () {
+        showDatePicker(
+          context: context,
+          firstDate: DateTime(2015),
+          lastDate: DateTime(2099),
+          initialDate: expDate == null ? DateTime.now() : expDate!,
+        ).then((date) {
+          setState(() {
+            expDate = date;
+          });
+        }
+        );
+      },
+    ),
   );
 
 
