@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    initialRoute: "/",
-    routes: {
-      "/": (context) => Homepage(),
-      "/form": (context) => Infoform(),
-    },
+    home: Homepage(),
+    // initialRoute: "/",
+    // routes: {
+    //   "/": (context) => Homepage(),
+    //   "/form": (context) => Infoform(),
+    //},
   ));
 }
-
