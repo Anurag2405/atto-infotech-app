@@ -80,6 +80,7 @@ class _InfoformState extends State<Infoform> {
   Widget buildSubmit() => SizedBox(
     height: 50,
     child: ElevatedButton(
+      // style:  ElevatedButton.styleFrom(primary: Colors.green),
       child: Text(
         "Submit",
         style: TextStyle(fontSize: 24),
@@ -163,6 +164,9 @@ class _InfoformState extends State<Infoform> {
     return Scaffold(
       appBar: AppBar(
         title: Text("information form"),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0.0,
       ),
       body: Form(
         key: formKey,
