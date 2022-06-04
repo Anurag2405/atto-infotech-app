@@ -1,5 +1,5 @@
 import 'package:attoform/models/client.dart';
-import 'package:attoform/screens/client_card.dart';
+import 'package:attoform/widget/client_card.dart';
 import 'package:attoform/screens/formpage.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
