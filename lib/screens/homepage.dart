@@ -3,6 +3,7 @@ import 'package:attoform/widget/client_card.dart';
 import 'package:attoform/screens/formpage.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
 
@@ -29,10 +30,10 @@ class _HomepageState extends State<Homepage> {
   }
 
   Widget buildSearch() => SearchWidget(
-    text: query,
-    hintText: 'client name or service type',
-    onChanged: searchBook,
-  );
+        text: query,
+        hintText: 'client name or service type',
+        onChanged: searchBook,
+      );
 
   void searchBook(String query) {
     final clients = ClientList.where((client) {
@@ -84,11 +85,11 @@ class _HomepageState extends State<Homepage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label: 'Services',
+            label: 'Products',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
-            label: 'People',
+            label: 'Notifications',
           ),
         ],
         currentIndex: _selectedIndex,

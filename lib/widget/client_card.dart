@@ -19,7 +19,7 @@ class ClientCard extends StatelessWidget {
           children: [
             Text(client.name),
             SizedBox(height: 10),
-            Text(client.date_of_expiry),
+            Text(client.dateOfExpiry),
             SizedBox(height: 20),
             Text(client.note)
           ],
