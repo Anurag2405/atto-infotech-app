@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:searchfield/searchfield.dart';
 class Infoform extends StatefulWidget {
   const Infoform({Key? key}) : super(key: key);
 
@@ -9,12 +9,12 @@ class Infoform extends StatefulWidget {
 
 class _InfoformState extends State<Infoform> {
   final formKey  = GlobalKey<FormState>();
-  final items = ['Domain','Hosting','SSl','Email'];
   String name = '';
   String? email = '';
   String? phone_number;
-  String? dropval;
+  // String? dropval;
   DateTime? expDate;
+  String? selectedItem;
 
 
   Widget buildname() => TextFormField(
@@ -91,7 +91,7 @@ class _InfoformState extends State<Infoform> {
           print(name);
           print(email);
           print(phone_number);
-          print(dropval);
+          print(selectedItem);
           print(expDate);
         }
       },
@@ -105,32 +105,40 @@ class _InfoformState extends State<Infoform> {
     ),
   );
 
-  Widget buildDrop() => Container(
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.grey),
-      borderRadius: BorderRadius.circular(4),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-            border: InputBorder.none),
-        validator: (value){
-          if (value == null){
-            return "Please select a service";
-          } else {
-            return null;
-          }
-        },
-          value: dropval,
-          hint: Text("Choose type of service"),
-          isExpanded: true,
-          iconSize: 36,
-          icon: Icon(Icons.arrow_drop_down),
-          items: items.map(buildMenuItem).toList(),
-          onChanged: (dropval) => setState(() => this.dropval = dropval)
+  Widget buildDrop() => SearchField(
+    suggestions: [
+      'Domain','Hosting','SSl','Email'
+    ].map((e) => SearchFieldListItem(e, child: Text(e)))
+        .toList(),
+    hint: 'pick a service',
+    searchInputDecoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.blueGrey,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.blue,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(4),
       ),
     ),
+    itemHeight: 50,
+    maxSuggestionsInViewPort: 4,
+    suggestionsDecoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+
+    ),
+    onSuggestionTap: (value){
+      setState((){
+        selectedItem = value.key.toString();
+      });
+    },
   );
 
 
