@@ -20,7 +20,7 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     super.initState();
 
-    clients = ClientList;
+    clients = clientList;
   }
 
   void _onItemTapped(int index) {
@@ -36,7 +36,7 @@ class _HomepageState extends State<Homepage> {
       );
 
   void searchBook(String query) {
-    final clients = ClientList.where((client) {
+    final clients = clientList.where((client) {
       final nameLower = client.name.toLowerCase();
       final serviceLower = client.service.toLowerCase();
       final searchLower = query.toLowerCase();
@@ -95,6 +95,14 @@ class _HomepageState extends State<Homepage> {
         currentIndex: _selectedIndex,
         // selectedItemColor: Colors.redAccent,
         onTap: _onItemTapped,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.white,
+        child: const Icon(
+          Icons.add,
+          color: Colors.indigo,
+        ),
       ),
     );
   }

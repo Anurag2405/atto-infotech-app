@@ -15,7 +15,7 @@ class Client {
       required this.dateOfExpiry});
 }
 
-List<Client> ClientList = [
+List<Client> clientList = [
   Client(
       name: "atto infotech",
       email: "attoInfotech@gmail.com",
