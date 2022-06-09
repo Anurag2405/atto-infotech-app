@@ -1,8 +1,10 @@
 import 'package:attoform/models/client.dart';
+import 'package:attoform/screens/products.dart';
 import 'package:attoform/widget/client_card.dart';
 import 'package:attoform/screens/formpage.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
+import 'package:attoform/screens/notifications.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -15,6 +17,12 @@ class _HomepageState extends State<Homepage> {
   int _selectedIndex = 0;
   String query = '';
   late List<Client> clients;
+  int currentIndex = 0;
+  final screens = [
+    Homepage(),
+    ProductsMaster(),
+    NotificationsPage(),
+  ];
 
   @override
   void initState() {
@@ -78,7 +86,7 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             label: 'Clients',
@@ -92,9 +100,11 @@ class _HomepageState extends State<Homepage> {
             label: 'Notifications',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: currentIndex,
+        type: BottomNavigationBarType.fixed,
         // selectedItemColor: Colors.redAccent,
-        onTap: _onItemTapped,
+        onTap: (index)  => setState(() => currentIndex = index),
+        // onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
