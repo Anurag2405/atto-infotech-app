@@ -4,10 +4,11 @@ import 'package:attoform/screens/homepage.dart';
 import 'package:attoform/screens/products.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/screens/notifications.dart';
+import 'package:attoform/screens/mainpage.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: NotificationsPage(),
+    home: Mainpage(),
     // home: Homepage(),
     // home: ProductsMaster(),
     // home: Infoform(),

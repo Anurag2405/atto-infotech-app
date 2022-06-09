@@ -14,6 +14,7 @@ class _ProductsMasterState extends State<ProductsMaster> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
           'Product Master',

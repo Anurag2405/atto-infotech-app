@@ -14,15 +14,10 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  int _selectedIndex = 0;
+
   String query = '';
   late List<Client> clients;
-  int currentIndex = 0;
-  final screens = [
-    Homepage(),
-    ProductsMaster(),
-    NotificationsPage(),
-  ];
+
 
   @override
   void initState() {
@@ -31,11 +26,6 @@ class _HomepageState extends State<Homepage> {
     clients = clientList;
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   Widget buildSearch() => SearchWidget(
         text: query,
@@ -64,6 +54,7 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
           'Atto Infotech',
@@ -84,27 +75,6 @@ class _HomepageState extends State<Homepage> {
                 }),
           ),
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Clients',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Products',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Notifications',
-          ),
-        ],
-        currentIndex: currentIndex,
-        type: BottomNavigationBarType.fixed,
-        // selectedItemColor: Colors.redAccent,
-        onTap: (index)  => setState(() => currentIndex = index),
-        // onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
