@@ -9,7 +9,7 @@ class ClientCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(10),
       elevation: 5,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -20,9 +20,13 @@ class ClientCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(client.name),
+                Text(
+                  client.name,
+                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+                ),
                 SizedBox(height: 10),
-                Text(client.dateOfExpiry),
+                Text(client.dateOfExpiry,
+                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                 SizedBox(height: 20),
                 Text(client.note)
               ],

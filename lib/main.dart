@@ -9,7 +9,7 @@ import 'package:attoform/screens/productform.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Prodform(),
+    home: Mainpage(),
     // home: Homepage(),
     // home: ProductsMaster(),
     // home: Infoform(),

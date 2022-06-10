@@ -64,15 +64,18 @@ class _HomepageState extends State<Homepage> {
               fontFamily: "Roboto"),
         ),
       ),
-      body: Column(
+      body:
+      Column(
         children: [
           buildSearch(),
           Expanded(
-            child: ListView.builder(
-                itemCount: clients.length,
-                itemBuilder: (context, int index) {
-                  return ClientCard(client: clients[index]);
-                }),
+            child: Container(color: Colors.grey[100],
+              child: ListView.builder(
+                  itemCount: clients.length,
+                  itemBuilder: (context, int index) {
+                    return ClientCard(client: clients[index]);
+                  }),
+            ),
           ),
         ],
       ),
