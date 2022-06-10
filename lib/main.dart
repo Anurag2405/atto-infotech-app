@@ -5,10 +5,11 @@ import 'package:attoform/screens/products.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/screens/notifications.dart';
 import 'package:attoform/screens/mainpage.dart';
+import 'package:attoform/screens/productform.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Mainpage(),
+    home: Prodform(),
     // home: Homepage(),
     // home: ProductsMaster(),
     // home: Infoform(),

@@ -13,15 +13,31 @@ class ClientCard extends StatelessWidget {
       elevation: 5,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(client.name),
-            SizedBox(height: 10),
-            Text(client.dateOfExpiry),
-            SizedBox(height: 20),
-            Text(client.note)
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(client.name),
+                SizedBox(height: 10),
+                Text(client.dateOfExpiry),
+                SizedBox(height: 20),
+                Text(client.note)
+              ],
+            ),
+            Container(
+                width: 70,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.blueGrey[100],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(client.service),
+                )),
           ],
         ),
       ),

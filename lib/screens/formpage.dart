@@ -12,7 +12,6 @@ class _InfoformState extends State<Infoform> {
   String name = '';
   String? email = '';
   String? phone_number;
-  // String? dropval;
   DateTime? expDate;
   String? selectedItem;
 
@@ -171,7 +170,7 @@ class _InfoformState extends State<Infoform> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("information form"),
+        title: Text("Client form"),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0.0,
