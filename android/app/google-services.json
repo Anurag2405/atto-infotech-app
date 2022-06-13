@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:543205411337:android:b9f86fe996f18a177086d8",
+        "android_client_info": {
+          "package_name": "com.atto.hosting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543205411337-jo35m0aajfrhvjrgj9d6tkar89sfr001.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkKDISuEUI_Rd5bHQqJmDxp2jX_RZtQNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543205411337-jo35m0aajfrhvjrgj9d6tkar89sfr001.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:543205411337:android:a1314851a36675897086d8",
         "android_client_info": {
           "package_name": "com.atto.hostingbucket"
