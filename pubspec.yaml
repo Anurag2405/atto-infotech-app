@@ -37,6 +37,7 @@ dependencies:
 
   #firestore
   cloud_firestore: ^3.1.7
+  firebase_core: ^1.17.1
 
 dev_dependencies:
   flutter_test:

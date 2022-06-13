@@ -8,7 +8,7 @@ import 'package:attoform/screens/mainpage.dart';
 import 'package:attoform/screens/productform.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 

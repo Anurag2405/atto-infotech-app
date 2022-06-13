@@ -80,7 +80,11 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        heroTag: "btn1",
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Infoform()));
+        },
         backgroundColor: Colors.white,
         child: const Icon(
           Icons.add,

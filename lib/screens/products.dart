@@ -31,6 +31,7 @@ class _ProductsMasterState extends State<ProductsMaster> {
             return ProductCard(product: productList[index]);
           }),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn2",
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const Prodform()));

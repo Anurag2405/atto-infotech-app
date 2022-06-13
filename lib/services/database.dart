@@ -12,6 +12,7 @@ class DatabaseService {
   //update client master
   Future updateClientMaster(String name, String emailId, String phoneNumber,
       String service, String expDate) async {
+    print(name);
     return await _clientMaster.doc(name).set({
       'name': name,
       'emailId': emailId,
@@ -23,6 +24,7 @@ class DatabaseService {
 
   //update product master
   Future updateProductMaster(String productName, String price) async {
+    print(productName);
     return await _productsMaster
         .doc(productName)
         .set({'name': productName, 'price': price});

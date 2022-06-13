@@ -98,8 +98,7 @@ class _ClientsState extends State<Clients> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Infoform()));
+
         },
         backgroundColor: Colors.white,
         child: const Icon(
