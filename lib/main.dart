@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:attoform/screens/notifications.dart';
 import 'package:attoform/screens/mainpage.dart';
 import 'package:attoform/screens/productform.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MaterialApp(
     home: Mainpage(),
     // home: Homepage(),
