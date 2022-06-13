@@ -1,4 +1,6 @@
+import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
+
 class Prodform extends StatefulWidget {
   const Prodform({Key? key}) : super(key: key);
 
@@ -7,27 +9,25 @@ class Prodform extends StatefulWidget {
 }
 
 class _ProdformState extends State<Prodform> {
-  final formKey  = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   String name = '';
-  String? price;
-
+  String price = '';
 
   Widget buildname() => TextFormField(
       decoration: InputDecoration(
         labelText: "Name",
         border: OutlineInputBorder(),
       ),
-      validator: (value){
-        if (value!.length < 3){
+      validator: (value) {
+        if (value!.length < 3) {
           return "Enter atleast 3 characters";
         } else {
           return null;
         }
       },
       onChanged: (value) => setState(() {
-        name = value;
-      })
-  );
+            name = value;
+          }));
 
   Widget buildPhone() => TextFormField(
       decoration: InputDecoration(
@@ -35,41 +35,33 @@ class _ProdformState extends State<Prodform> {
         border: OutlineInputBorder(),
       ),
       keyboardType: TextInputType.number,
-      validator: (value){
-        if (value!.length < 1){
+      validator: (value) {
+        if (value!.length < 1) {
           return "Enter a valid price";
         } else {
           return null;
         }
       },
       onChanged: (value) => setState(() {
-        price = value;
-      })
-  );
-
-
-
+            price = value;
+          }));
 
   Widget buildSubmit() => SizedBox(
-    height: 50,
-    child: ElevatedButton(
-      // style:  ElevatedButton.styleFrom(primary: Colors.green),
-      child: Text(
-        "Submit",
-        style: TextStyle(fontSize: 24),
-      ),
-      onPressed: (){
-        final isValid = formKey.currentState!.validate();
-        if(isValid){
-          print(name);
-          print(price);
-        }
-      },
-    ),
-  );
-
-
-
+        height: 50,
+        child: ElevatedButton(
+          // style:  ElevatedButton.styleFrom(primary: Colors.green),
+          child: Text(
+            "Submit",
+            style: TextStyle(fontSize: 24),
+          ),
+          onPressed: () {
+            final isValid = formKey.currentState!.validate();
+            if (isValid) {
+              DatabaseService().updateProductMaster(name, price);
+            }
+          },
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {

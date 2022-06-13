@@ -1,4 +1,5 @@
 import 'package:attoform/models/client.dart';
+import 'package:attoform/screens/formpage.dart';
 import 'package:attoform/widget/client_card.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
@@ -96,7 +97,10 @@ class _ClientsState extends State<Clients> {
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Infoform()));
+        },
         backgroundColor: Colors.white,
         child: const Icon(
           Icons.add,

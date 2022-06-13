@@ -1,4 +1,5 @@
 import 'package:attoform/models/product.dart';
+import 'package:attoform/screens/productform.dart';
 import 'package:attoform/widget/product_card.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,10 @@ class _ProductsMasterState extends State<ProductsMaster> {
             return ProductCard(product: productList[index]);
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Prodform()));
+        },
         backgroundColor: Colors.white,
         child: const Icon(
           Icons.add,
