@@ -1,5 +1,7 @@
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:attoform/screens/mainpage.dart';
 
 class Prodform extends StatefulWidget {
   const Prodform({Key? key}) : super(key: key);
@@ -57,7 +59,22 @@ class _ProdformState extends State<Prodform> {
           onPressed: () {
             final isValid = formKey.currentState!.validate();
             if (isValid) {
-              DatabaseService().updateProductMaster(name, price);
+              DatabaseService().updateProductMaster(name, price).then((value) => {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Product Added!'),
+                  // action: SnackBarAction(
+                  //   label: 'Action',
+                  //   onPressed: () {
+                  //     // Code to execute.
+                  //   },
+                  // ),
+                ),
+              ),
+                Navigator.pop(context),
+                // Navigator.of(context).pushReplacement(
+                //     MaterialPageRoute(builder: (context) => Mainpage())),
+              });
             }
           },
         ),

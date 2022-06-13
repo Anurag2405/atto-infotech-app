@@ -15,7 +15,8 @@ class _InfoformState extends State<Infoform> {
   String emailId = '';
   String phoneNumber = '';
   DateTime? expDate;
-  String selectedItem = '';
+  String? selectedItem;
+  final items = ['Domain','Hosting','SSl','Email'];
 
   Widget buildname() => TextFormField(
       decoration: InputDecoration(
@@ -86,52 +87,106 @@ class _InfoformState extends State<Infoform> {
             final isValid = formKey.currentState!.validate();
             if (isValid) {
               DatabaseService().updateClientMaster(
-                  name, emailId, phoneNumber, selectedItem, expDate.toString());
+                  name, emailId, phoneNumber, selectedItem.toString(), expDate.toString()).then((value) => {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Client Added!'),
+                    // action: SnackBarAction(
+                    //   label: 'Action',
+                    //   onPressed: () {
+                    //     // Code to execute.
+                    //   },
+                    // ),
+                  ),
+                ),
+                Navigator.pop(context),
+                // Navigator.of(context).pushReplacement(
+                //     MaterialPageRoute(builder: (context) => Mainpage())),
+              });
             }
           },
         ),
       );
 
-  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-        value: item,
-        child: Text(
-          item,
-        ),
-      );
+  // DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+  //       value: item,
+  //       child: Text(
+  //         item,
+  //       ),
+  //     );
+  //
+  // Widget buildDrop() => SearchField(
+  //       suggestions: ['Domain', 'Hosting', 'SSl', 'Email']
+  //           .map((e) => SearchFieldListItem(e, child: Text(e)))
+  //           .toList(),
+  //       hint: 'pick a service',
+  //       searchInputDecoration: InputDecoration(
+  //         enabledBorder: OutlineInputBorder(
+  //           borderSide: BorderSide(
+  //             color: Colors.blueGrey,
+  //             width: 1,
+  //           ),
+  //           borderRadius: BorderRadius.circular(4),
+  //         ),
+  //         focusedBorder: OutlineInputBorder(
+  //           borderSide: BorderSide(
+  //             color: Colors.blue,
+  //             width: 1,
+  //           ),
+  //           borderRadius: BorderRadius.circular(4),
+  //         ),
+  //       ),
+  //       itemHeight: 50,
+  //       maxSuggestionsInViewPort: 4,
+  //       suggestionsDecoration: BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //       onSuggestionTap: (value) {
+  //         setState(() {
+  //           selectedItem = value.key.toString();
+  //         });
+  //       },
+  //     );
 
-  Widget buildDrop() => SearchField(
-        suggestions: ['Domain', 'Hosting', 'SSl', 'Email']
-            .map((e) => SearchFieldListItem(e, child: Text(e)))
-            .toList(),
-        hint: 'pick a service',
-        searchInputDecoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.blueGrey,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.blue,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(4),
-          ),
-        ),
-        itemHeight: 50,
-        maxSuggestionsInViewPort: 4,
-        suggestionsDecoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        onSuggestionTap: (value) {
-          setState(() {
-            selectedItem = value.key.toString();
-          });
-        },
-      );
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+    value: item,
+    child: Text(
+      item,
+    ),
+  );
+
+
+  Widget buildDrop() => Container(
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.grey),
+      borderRadius: BorderRadius.circular(4),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(6, 2, 6, 2),
+      child: DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+              border: InputBorder.none),
+          validator: (value){
+            if (value == null){
+              return "Please select a service";
+            } else {
+              return null;
+            }
+          },
+          value: selectedItem,
+          hint: Text("Choose type of service"),
+          isExpanded: true,
+          iconSize: 36,
+          icon: Icon(Icons.arrow_drop_down),
+          items: items.map(buildMenuItem).toList(),
+          onChanged: (dropval) => setState(() => this.selectedItem = dropval)
+      ),
+    ),
+  );
+
+
 
   Widget buildexp() => Container(
         decoration: BoxDecoration(

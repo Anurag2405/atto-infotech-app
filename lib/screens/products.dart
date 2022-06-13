@@ -15,21 +15,19 @@ class _ProductsMasterState extends State<ProductsMaster> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        title: const Text('Products',),
         backgroundColor: Colors.white,
-        title: const Text(
-          'Product Master',
-          style: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: Colors.black87,
-              fontFamily: "Roboto"),
-        ),
+        foregroundColor: Colors.black,
+        elevation: 0,
       ),
-      body: ListView.builder(
-          itemCount: productList.length,
-          itemBuilder: (context, int index) {
-            return ProductCard(product: productList[index]);
-          }),
+      body: Container(
+        color: Colors.grey[100],
+        child: ListView.builder(
+            itemCount: productList.length,
+            itemBuilder: (context, int index) {
+              return ProductCard(product: productList[index]);
+            }),
+      ),
       floatingActionButton: FloatingActionButton(
         heroTag: "btn2",
         onPressed: () {

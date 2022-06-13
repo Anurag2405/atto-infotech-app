@@ -36,11 +36,13 @@ class ClientCard extends StatelessWidget {
                 height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: Colors.blueGrey[100],
+                  color: Colors.blue[100],
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(client.service),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(client.service),
+                  ),
                 )),
           ],
         ),

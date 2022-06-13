@@ -54,15 +54,10 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
+        title: const Text('Atto Infotech',),
         backgroundColor: Colors.white,
-        title: const Text(
-          'Atto Infotech',
-          style: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: Colors.black87,
-              fontFamily: "Roboto"),
-        ),
+        foregroundColor: Colors.black,
+        elevation: 0,
       ),
       body:
       Column(
