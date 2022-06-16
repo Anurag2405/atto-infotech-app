@@ -20,7 +20,7 @@ class _ClientsState extends State<Clients> {
   void initState() {
     super.initState();
 
-    clients = clientList;
+    clients = demoClientList;
   }
 
   void _onItemTapped(int index) {
@@ -36,7 +36,7 @@ class _ClientsState extends State<Clients> {
       );
 
   void searchBook(String query) {
-    final clients = clientList.where((client) {
+    final clients = demoClientList.where((client) {
       final nameLower = client.name.toLowerCase();
       final serviceLower = client.service.toLowerCase();
       final searchLower = query.toLowerCase();
@@ -97,9 +97,7 @@ class _ClientsState extends State<Clients> {
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
+        onPressed: () {},
         backgroundColor: Colors.white,
         child: const Icon(
           Icons.add,

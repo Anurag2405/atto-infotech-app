@@ -5,6 +5,7 @@ import 'package:attoform/screens/formpage.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
 import 'package:attoform/screens/notifications.dart';
+import 'package:provider/provider.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -14,18 +15,15 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-
   String query = '';
   late List<Client> clients;
-
 
   @override
   void initState() {
     super.initState();
 
-    clients = clientList;
+    clients = demoClientList;
   }
-
 
   Widget buildSearch() => SearchWidget(
         text: query,
@@ -34,7 +32,7 @@ class _HomepageState extends State<Homepage> {
       );
 
   void searchBook(String query) {
-    final clients = clientList.where((client) {
+    final clients = demoClientList.where((client) {
       final nameLower = client.name.toLowerCase();
       final serviceLower = client.service.toLowerCase();
       final searchLower = query.toLowerCase();
@@ -51,25 +49,34 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    //actively listening to stream of return type Clients
+    final clientListt = Provider.of<List<Client>>(context);
+    print(clientListt);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Atto Infotech',),
+        title: const Text(
+          'Atto Infotech',
+        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body:
-      Column(
+      body: Column(
         children: [
           buildSearch(),
           Expanded(
-            child: Container(color: Colors.grey[100],
+            child: Container(
+              color: Colors.grey[100],
               child: ListView.builder(
-                  itemCount: clients.length,
-                  itemBuilder: (context, int index) {
-                    return ClientCard(client: clients[index]);
-                  }),
+                // itemCount: clients.length,
+                // itemBuilder: (context, int index) {
+                //   return ClientCard(client: clients[index]);}
+                itemCount: clientListt.length,
+                itemBuilder: (context, int index) {
+                  return ClientCard(client: clientListt[index]);
+                },
+              ),
             ),
           ),
         ],

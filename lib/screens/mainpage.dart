@@ -42,7 +42,7 @@ class _MainpageState extends State<Mainpage> {
         currentIndex: currentIndex,
         type: BottomNavigationBarType.fixed,
         // selectedItemColor: Colors.redAccent,
-        onTap: (index)  => setState(() => currentIndex = index),
+        onTap: (index) => setState(() => currentIndex = index),
         // onTap: _onItemTapped,
       ),
     );

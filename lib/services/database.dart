@@ -30,15 +30,19 @@ class DatabaseService {
         .set({'name': productName, 'price': price});
   }
 
-  // List<ClientCard> _clientCardFromFirebaseCollection(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     return ClientCard(
-  //         chatroomName: doc['chatroomName'], chatroomIcon: doc['Icon']);
-  //   }).toList();
-  // }
+  List<Client> _clientCardFromFirebaseCollection(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Client(
+          name: doc['name'],
+          email: doc['emailId'],
+          note: '',
+          price: '1000',
+          service: doc['service'],
+          dateOfExpiry: doc['expDate']);
+    }).toList();
+  }
 
-  // Stream<List<Client>> get clientMasterStream {
-  //   return _clientMaster.snapshots().map(_clientCardFromFirebaseCollection);
-  // }
-
+  Stream<List<Client>> get clientMasterStream {
+    return _clientMaster.snapshots().map(_clientCardFromFirebaseCollection);
+  }
 }
