@@ -5,7 +5,7 @@ class Product {
   Product({required this.name, required this.productId, required this.price});
 }
 
-List<Product> productList = [
+List<Product> demoProductList = [
   Product(name: 'Domain', productId: '1', price: '5000'),
   Product(name: 'Hosting', productId: '2', price: '10000'),
   Product(name: 'App development', productId: '3', price: '30000'),

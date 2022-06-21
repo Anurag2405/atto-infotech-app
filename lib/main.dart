@@ -1,5 +1,9 @@
 import 'package:attoform/models/client.dart';
+<<<<<<< Updated upstream
 import 'package:attoform/screens/ClientM.dart';
+=======
+import 'package:attoform/models/product.dart';
+>>>>>>> Stashed changes
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/screens/mainpage.dart';
@@ -10,12 +14,19 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(StreamProvider<List<Client>>.value(
-    catchError: (_, __) => [],
-    initialData: demoClientList,
-    value: DatabaseService().clientMasterStream,
-    child: MaterialApp(
-      home: Mainpage(),
+  runApp(
+    MultiProvider(
+      providers: [
+        StreamProvider.value(
+            value: DatabaseService().clientMasterStream,
+            initialData: demoClientList),
+        StreamProvider.value(
+            value: DatabaseService().productMasterStream,
+            initialData: demoProductList)
+      ],
+      child: MaterialApp(
+        home: Mainpage(),
+      ),
     ),
-  ));
+  );
 }

@@ -2,6 +2,7 @@ import 'package:attoform/models/product.dart';
 import 'package:attoform/screens/productform.dart';
 import 'package:attoform/widget/product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductsMaster extends StatefulWidget {
   const ProductsMaster({Key? key}) : super(key: key);
@@ -13,9 +14,12 @@ class ProductsMaster extends StatefulWidget {
 class _ProductsMasterState extends State<ProductsMaster> {
   @override
   Widget build(BuildContext context) {
+    final productList = Provider.of<List<Product>>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products',),
+        title: const Text(
+          'Products',
+        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
