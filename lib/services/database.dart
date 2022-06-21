@@ -2,8 +2,10 @@ import 'package:attoform/models/client.dart';
 import 'package:attoform/models/product.dart';
 import 'package:attoform/widget/client_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseService {
+  var uuid = Uuid();
   //collection reference
   final CollectionReference _clientMaster =
       FirebaseFirestore.instance.collection('Client Master');
@@ -11,10 +13,25 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('Product Master');
 
   //update client master
-  Future updateClientMaster(String name, String emailId, String phoneNumber,
+  Future createClientMaster(String name, String emailId, String phoneNumber,
       String service, String expDate) async {
+    var v4 = uuid.v4();
+    print(v4);
     print(name);
-    return await _clientMaster.doc().set({
+    return await _clientMaster.doc(v4).set({
+      'uid': v4,
+      'name': name,
+      'emailId': emailId,
+      'phoneNumber': phoneNumber,
+      'service': service,
+      'expDate': expDate
+    });
+  }
+
+  Future updateClientMaster(String v4,String name, String emailId, String phoneNumber,
+      String service, String expDate) async {
+    return await _clientMaster.doc(v4).set({
+      'uid': v4,
       'name': name,
       'emailId': emailId,
       'phoneNumber': phoneNumber,
@@ -35,7 +52,7 @@ class DatabaseService {
   List<Client> _clientListFromFirebaseCollection(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Client(
-          uid: "",
+          uid: doc['uid'] ?? '',
           name: doc['name'] ?? '',
           email: doc['emailId'] ?? '',
           phoneNumber: doc['phoneNumber'],

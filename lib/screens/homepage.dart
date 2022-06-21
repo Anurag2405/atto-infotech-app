@@ -1,4 +1,5 @@
 import 'package:attoform/models/client.dart';
+import 'package:attoform/screens/editclientinfo.dart';
 import 'package:attoform/screens/products.dart';
 import 'package:attoform/widget/client_card.dart';
 import 'package:attoform/screens/formpage.dart';
@@ -51,7 +52,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     //actively listening to stream of return type Clients
     final clientListt = Provider.of<List<Client>>(context);
-    print(clientListt);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -74,7 +75,13 @@ class _HomepageState extends State<Homepage> {
                 //   return ClientCard(client: clients[index]);}
                 itemCount: clientListt.length,
                 itemBuilder: (context, int index) {
-                  return ClientCard(client: clientListt[index]);
+                  return InkWell(
+                      child: ClientCard(client: clientListt[index]),
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (context) => Editclient(client: clientListt[index]),
+                        )) ,
+                  );
                 },
               ),
             ),
