@@ -35,6 +35,7 @@ class DatabaseService {
   List<Client> _clientListFromFirebaseCollection(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Client(
+          uid: "",
           name: doc['name'] ?? '',
           email: doc['emailId'] ?? '',
           phoneNumber: doc['phoneNumber'],
