@@ -16,8 +16,8 @@ class DatabaseService {
   Future createClientMaster(String name, String emailId, String phoneNumber,
       String service, String expDate) async {
     var v4 = uuid.v4();
-    print(v4);
-    print(name);
+    // print(v4);
+    // print(name);
     return await _clientMaster.doc(v4).set({
       'uid': v4,
       'name': name,
@@ -42,7 +42,7 @@ class DatabaseService {
 
   //update product master
   Future updateProductMaster(String productName, String price) async {
-    print(productName);
+    // print(productName);
     return await _productsMaster
         .doc(productName)
         .set({'name': productName, 'price': price});

@@ -1,5 +1,6 @@
+import 'package:attoform/screens/clientL.dart';
 import 'package:flutter/material.dart';
-import 'package:attoform/screens/homepage.dart';
+import 'package:attoform/screens/ClientM.dart';
 import 'package:attoform/screens/products.dart';
 import 'package:attoform/screens/notifications.dart';
 
@@ -14,6 +15,7 @@ class _MainpageState extends State<Mainpage> {
   int currentIndex = 0;
   final screens = [
     Homepage(),
+    ClientListing(),
     ProductsMaster(),
     NotificationsPage(),
   ];
@@ -26,6 +28,10 @@ class _MainpageState extends State<Mainpage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             label: 'Clients',
