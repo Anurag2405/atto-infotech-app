@@ -1,4 +1,5 @@
 import 'package:attoform/models/client.dart';
+import 'package:attoform/models/product.dart';
 import 'package:attoform/widget/client_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,7 +14,7 @@ class DatabaseService {
   Future updateClientMaster(String name, String emailId, String phoneNumber,
       String service, String expDate) async {
     print(name);
-    return await _clientMaster.doc(name).set({
+    return await _clientMaster.doc().set({
       'name': name,
       'emailId': emailId,
       'phoneNumber': phoneNumber,
@@ -29,20 +30,38 @@ class DatabaseService {
         .doc(productName)
         .set({'name': productName, 'price': price});
   }
+// to gt client list from firebase :
 
-  List<Client> _clientCardFromFirebaseCollection(QuerySnapshot snapshot) {
+  List<Client> _clientListFromFirebaseCollection(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Client(
-          name: doc['name'],
-          email: doc['emailId'],
+          name: doc['name'] ?? '',
+          email: doc['emailId'] ?? '',
+          phoneNumber: doc['phoneNumber'],
           note: '',
           price: '1000',
-          service: doc['service'],
+          service: doc['service'] ?? '',
           dateOfExpiry: doc['expDate']);
     }).toList();
   }
 
   Stream<List<Client>> get clientMasterStream {
-    return _clientMaster.snapshots().map(_clientCardFromFirebaseCollection);
+    return _clientMaster.snapshots().map(_clientListFromFirebaseCollection);
+  }
+
+// to get product list from firebase :
+
+  List<Product> _productListFromFirebaseCollection(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Product(
+        name: doc['name'] ?? '',
+        productId: '1',
+        price: doc['price'],
+      );
+    }).toList();
+  }
+
+  Stream<List<Product>> get productMasterStream {
+    return _productsMaster.snapshots().map(_productListFromFirebaseCollection);
   }
 }
