@@ -8,9 +8,9 @@ class DatabaseService {
   var uuid = Uuid();
   //collection reference
   final CollectionReference _clientMaster =
-      FirebaseFirestore.instance.collection('Client Master');
+  FirebaseFirestore.instance.collection('Client Master');
   final CollectionReference _productsMaster =
-      FirebaseFirestore.instance.collection('Product Master');
+  FirebaseFirestore.instance.collection('Product Master');
 
   //update client master
   Future createClientMaster(String name, String emailId, String phoneNumber,
