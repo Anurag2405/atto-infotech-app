@@ -28,8 +28,8 @@ class DatabaseService {
     });
   }
 
-  Future updateClientMaster(String v4,String name, String emailId, String phoneNumber,
-      String service, String expDate) async {
+  Future updateClientMaster(String v4, String name, String emailId,
+      String phoneNumber, String service, String expDate) async {
     return await _clientMaster.doc(v4).set({
       'uid': v4,
       'name': name,
@@ -45,7 +45,7 @@ class DatabaseService {
     // print(productName);
     return await _productsMaster
         .doc(productName)
-        .set({'name': productName, 'price': price});
+        .set({'name': productName, 'productId': '1', 'price': price});
   }
 // to gt client list from firebase :
 
