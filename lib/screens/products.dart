@@ -1,4 +1,5 @@
 import 'package:attoform/models/product.dart';
+import 'package:attoform/screens/editProduct.dart';
 import 'package:attoform/screens/productform.dart';
 import 'package:attoform/widget/product_card.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,13 @@ class _ProductsMasterState extends State<ProductsMaster> {
         child: ListView.builder(
             itemCount: productList.length,
             itemBuilder: (context, int index) {
-              return ProductCard(product: productList[index]);
+              return InkWell(
+                  child: ProductCard(product: productList[index]),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProduct(product: productList[index]),
+                    )) ,
+              );
             }),
       ),
       floatingActionButton: FloatingActionButton(

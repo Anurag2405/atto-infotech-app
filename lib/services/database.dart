@@ -39,13 +39,25 @@ class DatabaseService {
       'expDate': expDate
     });
   }
-
-  //update product master
-  Future updateProductMaster(String productName, String price) async {
-    // print(productName);
+  Future updateProductMaster(String v4,String productName, String price) async {
     return await _productsMaster
-        .doc(productName)
-        .set({'name': productName, 'price': price});
+        .doc(v4)
+        .set({
+      'uid': v4,
+      'name': productName,
+      'price': price});
+  }
+
+  //create product master
+  Future createProductMaster(String productName, String price) async {
+    // print(productName);
+    var v4 = uuid.v4();
+    return await _productsMaster
+        .doc(v4)
+        .set({
+      'uid': v4,
+      'name': productName,
+      'price': price});
   }
 // to gt client list from firebase :
 
@@ -72,6 +84,7 @@ class DatabaseService {
   List<Product> _productListFromFirebaseCollection(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Product(
+        uid: doc['uid'] ?? '',
         name: doc['name'] ?? '',
         productId: '1',
         price: doc['price'],

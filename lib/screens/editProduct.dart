@@ -1,21 +1,25 @@
+import 'package:attoform/models/product.dart';
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:attoform/screens/mainpage.dart';
+import 'package:attoform/models/product.dart';
 
-class Prodform extends StatefulWidget {
-  const Prodform({Key? key}) : super(key: key);
+class EditProduct extends StatefulWidget {
+  Product product;
+  EditProduct({required this.product});
 
   @override
-  State<Prodform> createState() => _ProdformState();
+  State<EditProduct> createState() => _EditProductState();
 }
 
-class _ProdformState extends State<Prodform> {
+class _EditProductState extends State<EditProduct> {
   final formKey = GlobalKey<FormState>();
-  String name = '';
-  String price = '';
+  String? name;
+  String? price;
 
   Widget buildname() => TextFormField(
+    initialValue: widget.product.name,
       decoration: InputDecoration(
         labelText: "Name",
         border: OutlineInputBorder(),
@@ -28,10 +32,11 @@ class _ProdformState extends State<Prodform> {
         }
       },
       onChanged: (value) => setState(() {
-            name = value;
-          }));
+        name = value;
+      }));
 
   Widget buildPhone() => TextFormField(
+    initialValue: widget.product.price,
       decoration: InputDecoration(
         labelText: "Price",
         border: OutlineInputBorder(),
@@ -45,40 +50,42 @@ class _ProdformState extends State<Prodform> {
         }
       },
       onChanged: (value) => setState(() {
-            price = value;
-          }));
+        price = value;
+      }));
 
   Widget buildSubmit() => SizedBox(
-        height: 50,
-        child: ElevatedButton(
-          // style:  ElevatedButton.styleFrom(primary: Colors.green),
-          child: Text(
-            "Submit",
-            style: TextStyle(fontSize: 24),
-          ),
-          onPressed: () {
-            final isValid = formKey.currentState!.validate();
-            if (isValid) {
-              DatabaseService().createProductMaster(name, price).then((value) => {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('Product Added!'),
-                  // action: SnackBarAction(
-                  //   label: 'Action',
-                  //   onPressed: () {
-                  //     // Code to execute.
-                  //   },
-                  // ),
-                ),
+    height: 50,
+    child: ElevatedButton(
+      // style:  ElevatedButton.styleFrom(primary: Colors.green),
+      child: Text(
+        "Submit",
+        style: TextStyle(fontSize: 24),
+      ),
+      onPressed: () {
+        final isValid = formKey.currentState!.validate();
+        if (isValid) {
+          name ??= widget.product.name;
+          price ??= widget.product.price;
+          DatabaseService().updateProductMaster(widget.product.uid,name.toString(), price.toString()).then((value) => {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Product Edited!'),
+                // action: SnackBarAction(
+                //   label: 'Action',
+                //   onPressed: () {
+                //     // Code to execute.
+                //   },
+                // ),
               ),
-                Navigator.pop(context),
-                // Navigator.of(context).pushReplacement(
-                //     MaterialPageRoute(builder: (context) => Mainpage())),
-              });
-            }
-          },
-        ),
-      );
+            ),
+            Navigator.pop(context),
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(builder: (context) => Mainpage())),
+          });
+        }
+      },
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
