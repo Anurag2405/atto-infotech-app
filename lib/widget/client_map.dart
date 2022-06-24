@@ -13,21 +13,32 @@ class ClientMap extends StatelessWidget {
       elevation: 5,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    client.name,
-                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        client.name,
+                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+                      ),
+                      SizedBox(height: 10,),
+                      Text(
+                        client.email,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  IconButton(onPressed: (){}, icon: Icon(Icons.phone)),
+                ],
+              ),
             ),
           ],
         ),

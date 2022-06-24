@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:attoform/models/notification.dart';
+
 class NotifyTile extends StatelessWidget {
   // const NotifyTile({Key? key}) : super(key: key);
   Notify notification;

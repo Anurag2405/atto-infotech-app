@@ -1,6 +1,5 @@
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
-import 'package:searchfield/searchfield.dart';
 
 class Infoform extends StatefulWidget {
   const Infoform({Key? key}) : super(key: key);

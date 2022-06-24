@@ -1,6 +1,6 @@
 import 'package:attoform/models/product.dart';
-import 'package:attoform/screens/editProduct.dart';
-import 'package:attoform/screens/productform.dart';
+import 'package:attoform/screens/forms/edit_product_form.dart';
+import 'package:attoform/screens/forms/add_product_form.dart';
 import 'package:attoform/widget/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

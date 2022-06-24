@@ -1,8 +1,9 @@
 import 'package:attoform/models/client.dart';
-import 'package:attoform/screens/editclientinfo.dart';
+import 'package:attoform/screens/forms/add_clientmap_form.dart';
+import 'package:attoform/screens/forms/edit_client_form.dart';
 import 'package:attoform/screens/products.dart';
 import 'package:attoform/widget/client_card.dart';
-import 'package:attoform/screens/formpage.dart';
+import 'package:attoform/screens/forms/add_client_form.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
 import 'package:attoform/screens/notifications.dart';
@@ -50,6 +51,8 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     //actively listening to stream of return type Clients
     final clientListt = Provider.of<List<Client>>(context);
 
@@ -92,7 +95,7 @@ class _HomepageState extends State<Homepage> {
         heroTag: "btn1",
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Infoform()));
+              MaterialPageRoute(builder: (context) => const AddMap()));
         },
         backgroundColor: Colors.white,
         child: const Icon(

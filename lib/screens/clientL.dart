@@ -1,8 +1,8 @@
 import 'package:attoform/models/client.dart';
-import 'package:attoform/screens/editclientinfo.dart';
+import 'package:attoform/screens/forms/edit_client_form.dart';
 import 'package:attoform/screens/products.dart';
 import 'package:attoform/widget/client_card.dart';
-import 'package:attoform/screens/formpage.dart';
+import 'package:attoform/screens/forms/add_client_form.dart';
 import 'package:attoform/widget/client_map.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
