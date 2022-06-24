@@ -24,7 +24,7 @@ Future<void> main() async {
             initialData: demoProductList)
       ],
       child: MaterialApp(
-        home: EditMap(map: Anu),
+        home: Mainpage(),
       ),
     ),
   );

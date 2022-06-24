@@ -1,12 +1,12 @@
 import 'package:attoform/models/client.dart';
+import 'package:attoform/models/clientprodmap.dart';
 import 'package:attoform/screens/forms/add_clientmap_form.dart';
 import 'package:attoform/screens/forms/edit_client_form.dart';
 import 'package:attoform/screens/products.dart';
-import 'package:attoform/widget/client_card.dart';
+import 'package:attoform/widget/client_product_card.dart';
 import 'package:attoform/screens/forms/add_client_form.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
-import 'package:attoform/screens/notifications.dart';
 import 'package:provider/provider.dart';
 
 class Homepage extends StatefulWidget {
@@ -18,13 +18,13 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   String query = '';
-  late List<Client> clients;
+  late List<ClientProduct> clientProduct;
 
   @override
   void initState() {
     super.initState();
 
-    clients = demoClientList;
+    clientProduct = demoClientProductList;
   }
 
   Widget buildSearch() => SearchWidget(
@@ -36,23 +36,21 @@ class _HomepageState extends State<Homepage> {
   void searchBook(String query) {
     final clients = demoClientList.where((client) {
       final nameLower = client.name.toLowerCase();
-      final serviceLower = client.service.toLowerCase();
+      //final serviceLower = client.service.toLowerCase();
       final searchLower = query.toLowerCase();
 
-      return nameLower.contains(searchLower) ||
-          serviceLower.contains(searchLower);
+      return nameLower.contains(searchLower);
+      //||serviceLower.contains(searchLower);
     }).toList();
 
     setState(() {
       this.query = query;
-      this.clients = clients;
+      this.clientProduct = clientProduct;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     //actively listening to stream of return type Clients
     final clientListt = Provider.of<List<Client>>(context);
 
@@ -79,11 +77,14 @@ class _HomepageState extends State<Homepage> {
                 itemCount: clientListt.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
-                      child: ClientCard(client: clientListt[index]),
-                    onTap: () => Navigator.push(context,
+                    child: ClientProductCard(
+                        clientProduct: demoClientProductList[index]),
+                    onTap: () => Navigator.push(
+                        context,
                         MaterialPageRoute(
-                          builder: (context) => Editclient(client: clientListt[index]),
-                        )) ,
+                          builder: (context) =>
+                              Editclient(client: clientListt[index]),
+                        )),
                   );
                 },
               ),
@@ -94,8 +95,8 @@ class _HomepageState extends State<Homepage> {
       floatingActionButton: FloatingActionButton(
         heroTag: "btn1",
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddMap()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const AddMap()));
         },
         backgroundColor: Colors.white,
         child: const Icon(

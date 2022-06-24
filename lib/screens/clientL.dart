@@ -1,9 +1,9 @@
 import 'package:attoform/models/client.dart';
 import 'package:attoform/screens/forms/edit_client_form.dart';
 import 'package:attoform/screens/products.dart';
-import 'package:attoform/widget/client_card.dart';
+import 'package:attoform/widget/client_product_card.dart';
 import 'package:attoform/screens/forms/add_client_form.dart';
-import 'package:attoform/widget/client_map.dart';
+import 'package:attoform/widget/client_card.dart';
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/search_widget.dart';
 import 'package:attoform/screens/notifications.dart';
@@ -28,19 +28,19 @@ class _ClientListingState extends State<ClientListing> {
   }
 
   Widget buildSearch() => SearchWidget(
-    text: query,
-    hintText: 'client name or service type',
-    onChanged: searchBook,
-  );
+        text: query,
+        hintText: 'client name or service type',
+        onChanged: searchBook,
+      );
 
   void searchBook(String query) {
     final clients = demoClientList.where((client) {
       final nameLower = client.name.toLowerCase();
-      final serviceLower = client.service.toLowerCase();
+      //final serviceLower = client.service.toLowerCase();
       final searchLower = query.toLowerCase();
 
-      return nameLower.contains(searchLower) ||
-          serviceLower.contains(searchLower);
+      return nameLower.contains(searchLower);
+      //||serviceLower.contains(searchLower);
     }).toList();
 
     setState(() {
@@ -77,11 +77,13 @@ class _ClientListingState extends State<ClientListing> {
                 itemCount: clientListt.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
-                    child: ClientMap(client: clientListt[index]),
-                    onTap: () => Navigator.push(context,
+                    child: ClientCard(client: clientListt[index]),
+                    onTap: () => Navigator.push(
+                        context,
                         MaterialPageRoute(
-                          builder: (context) => Editclient(client: clientListt[index]),
-                        )) ,
+                          builder: (context) =>
+                              Editclient(client: clientListt[index]),
+                        )),
                   );
                 },
               ),

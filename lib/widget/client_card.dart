@@ -13,37 +13,36 @@ class ClientCard extends StatelessWidget {
       elevation: 5,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  client.name,
-                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
-                ),
-                SizedBox(height: 10),
-                Text(client.dateOfExpiry,
-                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
-                SizedBox(height: 20),
-                Text(client.note)
-              ],
-            ),
-            Container(
-                width: 70,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.blue[100],
-                ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(client.service),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        client.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        client.email,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
                   ),
-                )),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
+                ],
+              ),
+            ),
           ],
         ),
       ),
