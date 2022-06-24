@@ -13,9 +13,7 @@ class _InfoformState extends State<Infoform> {
   String name = '';
   String emailId = '';
   String phoneNumber = '';
-  DateTime? expDate;
-  String? selectedItem;
-  final items = ['Domain','Hosting','SSl','Email'];
+  String gstNo = "";
 
   Widget buildname() => TextFormField(
       decoration: InputDecoration(
@@ -74,6 +72,23 @@ class _InfoformState extends State<Infoform> {
         onChanged: (value) => setState(() => emailId = value),
       );
 
+  Widget buildgst() => TextFormField(
+      decoration: InputDecoration(
+        labelText: "GST number",
+        border: OutlineInputBorder(),
+        suffixIcon: Icon(Icons.person),
+      ),
+      validator: (value) {
+        if (value!.length < 1) {
+          return "Enter proper gst number";
+        } else {
+          return null;
+        }
+      },
+      onChanged: (value) => setState(() {
+        gstNo = value;
+      }));
+
   Widget buildSubmit() => SizedBox(
         height: 50,
         child: ElevatedButton(
@@ -86,7 +101,7 @@ class _InfoformState extends State<Infoform> {
             final isValid = formKey.currentState!.validate();
             if (isValid) {
               DatabaseService().createClientMaster(
-                  name, emailId, phoneNumber, selectedItem.toString(), expDate.toString()).then((value) => {
+                  name, emailId, phoneNumber,gstNo).then((value) => {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text('Client Added!'),
@@ -129,6 +144,8 @@ class _InfoformState extends State<Infoform> {
             buildEmail(),
             const SizedBox(height: 16),
             buildPhone(),
+            const SizedBox(height: 16),
+            buildgst(),
             const SizedBox(height: 16),
             buildSubmit(),
           ],

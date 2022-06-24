@@ -15,6 +15,7 @@ class _AddMapState extends State<AddMap> {
   String? product;
   DateTime? expDate;
   String? price;
+  String note ="";
 
 
   Widget clientDrop(List<String> item) => DropdownSearch<String>(
@@ -103,6 +104,17 @@ class _AddMapState extends State<AddMap> {
       }));
 
 
+  Widget buildnote() => TextFormField(
+      decoration: InputDecoration(
+        labelText: "Note (optional)",
+        border: OutlineInputBorder(),
+        suffixIcon: Icon(Icons.note_add_rounded),
+      ),
+      onChanged: (value) => setState(() {
+        note = value;
+      }));
+
+
 
 
 
@@ -117,21 +129,22 @@ class _AddMapState extends State<AddMap> {
       onPressed: () {
         final isValid = formKey.currentState!.validate();
         if (isValid) {
-          print(name);
-          print(product);
-          print(expDate);
-          print(price);
+          // print(name);
+          // print(product);
+          // print(expDate);
+          // print(price);
 
-          // DatabaseService().createClientMaster(
-          //     name.toString(), "emailId", "phoneNumber", product.toString(), expDate.toString()).then((value) => {
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(
-          //       content: const Text('Map Added!'),
-          //     ),
-          //   ),
-          //   Navigator.pop(context),
-          //
-          // });
+          DatabaseService().createClientProductMaster(
+              name.toString(), "123", product.toString(), price.toString(), expDate.toString(), note).then((value) => {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Map Added!'),
+              ),
+            ),
+            Navigator.pop(context),
+          });
+
+
         }
       },
     ),
@@ -165,6 +178,7 @@ class _AddMapState extends State<AddMap> {
             const SizedBox(height: 16),
             buildexp(),
             const SizedBox(height: 16),
+            buildnote(),
             const SizedBox(height: 16),
             buildSubmit(),
           ],

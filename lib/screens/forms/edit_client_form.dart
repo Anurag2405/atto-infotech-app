@@ -15,9 +15,7 @@ class _EditclientState extends State<Editclient> {
   String? name;
   String? emailId;
   String? phoneNumber;
-  DateTime? expDate;
-  String? selectedItem;
-  final items = ['Domain', 'Hosting', 'SSl', 'Email'];
+  String? gstNo;
 
   Widget buildname() => TextFormField(
       initialValue: widget.client.name,
@@ -79,6 +77,24 @@ class _EditclientState extends State<Editclient> {
         onChanged: (value) => setState(() => emailId = value),
       );
 
+  Widget buildgst() => TextFormField(
+    initialValue: widget.client.gstNo,
+      decoration: InputDecoration(
+        labelText: "GST number",
+        border: OutlineInputBorder(),
+        suffixIcon: Icon(Icons.person),
+      ),
+      validator: (value) {
+        if (value!.length < 1) {
+          return "Enter proper gst number";
+        } else {
+          return null;
+        }
+      },
+      onChanged: (value) => setState(() {
+        gstNo = value;
+      }));
+
   Widget buildSubmit() => SizedBox(
         height: 50,
         child: ElevatedButton(
@@ -93,10 +109,11 @@ class _EditclientState extends State<Editclient> {
               name ??= widget.client.name;
               emailId ??= widget.client.email;
               phoneNumber ??= widget.client.phoneNumber;
+              gstNo ??= widget.client.gstNo;
 
               DatabaseService()
                   .updateClientMaster(widget.client.uid, name.toString(),
-                      emailId.toString(), phoneNumber.toString())
+                      emailId.toString(), phoneNumber.toString(),gstNo.toString())
                   .then((value) => {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -129,6 +146,8 @@ class _EditclientState extends State<Editclient> {
             buildEmail(),
             const SizedBox(height: 16),
             buildPhone(),
+            const SizedBox(height: 16),
+            buildgst(),
             const SizedBox(height: 16),
             buildSubmit(),
           ],

@@ -21,7 +21,10 @@ Future<void> main() async {
             initialData: demoClientList),
         StreamProvider.value(
             value: DatabaseService().productMasterStream,
-            initialData: demoProductList)
+            initialData: demoProductList),
+        StreamProvider.value(
+            value: DatabaseService().clientProductMasterStream,
+            initialData: demoClientProductList),
       ],
       child: MaterialApp(
         home: Mainpage(),

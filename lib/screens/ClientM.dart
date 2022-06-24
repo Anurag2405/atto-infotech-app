@@ -2,6 +2,7 @@ import 'package:attoform/models/client.dart';
 import 'package:attoform/models/clientprodmap.dart';
 import 'package:attoform/screens/forms/add_clientmap_form.dart';
 import 'package:attoform/screens/forms/edit_client_form.dart';
+import 'package:attoform/screens/forms/edit_clientmap_form.dart';
 import 'package:attoform/screens/products.dart';
 import 'package:attoform/widget/client_product_card.dart';
 import 'package:attoform/screens/forms/add_client_form.dart';
@@ -52,7 +53,7 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     //actively listening to stream of return type Clients
-    final clientListt = Provider.of<List<Client>>(context);
+    final clientprodListt = Provider.of<List<ClientProduct>>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -74,16 +75,17 @@ class _HomepageState extends State<Homepage> {
                 // itemCount: clients.length,
                 // itemBuilder: (context, int index) {
                 //   return ClientCard(client: clients[index]);}
-                itemCount: clientListt.length,
+                itemCount: clientprodListt.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
                     child: ClientProductCard(
-                        clientProduct: demoClientProductList[index]),
+                        clientProduct: clientprodListt[index]),
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              Editclient(client: clientListt[index]),
+                              // Editclient(client: clientprodListt[index]),
+                          EditMap(map: clientprodListt[index]),
                         )),
                   );
                 },

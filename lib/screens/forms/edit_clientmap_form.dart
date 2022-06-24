@@ -17,6 +17,7 @@ class _EditMapState extends State<EditMap> {
   String? product;
   DateTime? expDate;
   String? price;
+  String? note;
 
   Widget clientDrop(List<String> item) => DropdownSearch<String>(
         popupProps: PopupProps.menu(
@@ -103,6 +104,17 @@ class _EditMapState extends State<EditMap> {
             price = value;
           }));
 
+  Widget buildnote() => TextFormField(
+    initialValue: widget.map.note,
+      decoration: InputDecoration(
+        labelText: "Note (optional)",
+        border: OutlineInputBorder(),
+        suffixIcon: Icon(Icons.note_add_rounded),
+      ),
+      onChanged: (value) => setState(() {
+        note = value;
+      }));
+
   Widget buildSubmit() => SizedBox(
         height: 50,
         child: ElevatedButton(
@@ -118,22 +130,18 @@ class _EditMapState extends State<EditMap> {
               price ??= widget.map.price;
               expDate ??= DateTime.parse(widget.map.dateOfExpiry);
               product ??= widget.map.product;
+              note ??= widget.map.note;
 
-              print(name);
-              print(product);
-              print(expDate);
-              print(price);
 
-              // DatabaseService().createClientMaster(
-              //     name.toString(), "emailId", "phoneNumber", product.toString(), expDate.toString()).then((value) => {
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(
-              //       content: const Text('Map Added!'),
-              //     ),
-              //   ),
-              //   Navigator.pop(context),
-              //
-              // });
+              DatabaseService().updateclientProductMaster(
+                  widget.map.uid, name.toString(), "phoneNumber", product.toString(), price.toString(), expDate.toString(), note.toString()).then((value) => {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Map Edited!'),
+                  ),
+                ),
+                Navigator.pop(context),
+              });
             }
           },
         ),
@@ -164,6 +172,7 @@ class _EditMapState extends State<EditMap> {
             const SizedBox(height: 16),
             buildexp(),
             const SizedBox(height: 16),
+            buildnote(),
             const SizedBox(height: 16),
             buildSubmit(),
           ],
