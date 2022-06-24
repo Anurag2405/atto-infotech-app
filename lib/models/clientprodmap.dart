@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 class ClientProduct {
   String uid;
   String name;
@@ -15,6 +16,15 @@ class ClientProduct {
       required this.price,
       required this.dateOfExpiry,
       required this.note});
+
+  ClientProduct.fromSnapshot(DocumentSnapshot snapshot) :
+        uid = snapshot['uid'],
+        name = snapshot['name'],
+        phoneNumber = snapshot['name'],
+        product = snapshot['name'],
+        price = snapshot['name'],
+        dateOfExpiry = snapshot['name'],
+        note = snapshot['name'];
 }
 
 List<ClientProduct> demoClientProductList = [

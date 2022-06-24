@@ -1,6 +1,8 @@
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:provider/provider.dart';
+import 'package:attoform/models/client.dart';
 
 class AddMap extends StatefulWidget {
   const AddMap({Key? key}) : super(key: key);
@@ -155,7 +157,18 @@ class _AddMapState extends State<AddMap> {
 
   @override
   Widget build(BuildContext context) {
-    final clients = ['Anurag','Ashish','Mayank','Example','Example2'];
+    final clientListt = Provider.of<List<Client>>(context);
+    List<String> clientnames = [];
+    clientListt.forEach((element) {
+      clientnames.add(element.name);
+    });
+    clientnames.forEach((element) {
+      print(element);
+    });
+    // List<String> clients = clientListt.map((client){
+    //   client.name;
+    // });
+    // final clients = ['Anurag','Ashish','Mayank','Example','Example2'];
     final items = ['Domain','Hosting','SSl','Email','Web'];
     return Scaffold(
       appBar: AppBar(
@@ -170,7 +183,7 @@ class _AddMapState extends State<AddMap> {
           padding: EdgeInsets.all(16),
           children: [
             const SizedBox(height: 16),
-            clientDrop(clients),
+            clientDrop(clientnames),
             const SizedBox(height: 16),
             productDrop(items),
             const SizedBox(height: 16),
