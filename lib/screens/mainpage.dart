@@ -33,7 +33,7 @@ class _MainpageState extends State<Mainpage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
+            icon: Icon(Icons.people),
             label: 'Clients',
           ),
           BottomNavigationBarItem(
@@ -41,7 +41,7 @@ class _MainpageState extends State<Mainpage> {
             label: 'Products',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.people),
+            icon: Icon(Icons.notifications),
             label: 'Notifications',
           ),
         ],

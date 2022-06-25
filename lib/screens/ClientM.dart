@@ -1,17 +1,10 @@
-import 'package:attoform/models/client.dart';
 import 'package:attoform/models/clientprodmap.dart';
 import 'package:attoform/screens/forms/add_clientmap_form.dart';
-import 'package:attoform/screens/forms/edit_client_form.dart';
 import 'package:attoform/screens/forms/edit_clientmap_form.dart';
-import 'package:attoform/screens/products.dart';
 import 'package:attoform/widget/client_product_card.dart';
-import 'package:attoform/screens/forms/add_client_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:attoform/widget/search_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:attoform/screens/mainpage.dart';
-import 'package:attoform/services/database.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -21,10 +14,11 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  String query = '';
-  late List<ClientProduct> clientProduct;
+
+  // late List<ClientProduct> clientProduct;
 
   // Search Functionality
+  String query = '';
   Future? resultsLoaded;
   List _allResults = [];
   List _resultsList = [];
@@ -74,27 +68,19 @@ class _HomepageState extends State<Homepage> {
     });
     searchResultsList();
     return "complete";
-
   }
 
   searchResultsList() {
-    var showResults = [];
+    // var showResults = [];
     query = _searchController.text;
-    // if(_searchController.text != "") {
-    //   for(var clientprodsnap in _allResults){
-    //     var title = ClientProduct.fromSnapshot(clientprodsnap).name.toLowerCase();
-    //     if(title.contains(_searchController.text.toLowerCase())) {
-    //       showResults.add(clientprodsnap);
-    //     }
-    //   }
-    // }
+
     final _resultsList = _allResults.where((client) {
       final nameLower = client.name.toLowerCase();
-      //final serviceLower = client.service.toLowerCase();
+      final serviceLower = client.product.toLowerCase();
       final searchLower = query.toLowerCase();
 
-      return nameLower.contains(searchLower);
-      //||serviceLower.contains(searchLower);
+      return nameLower.contains(searchLower)
+      || serviceLower.contains(searchLower);
     }).toList();
 
     setState(() {
@@ -102,23 +88,7 @@ class _HomepageState extends State<Homepage> {
       this._resultsList = _resultsList;
     });
 
-    // if(_searchController.text != ""){
-    //   final clients = _allResults.where((client) {
-    //     final nameLower = client.name.toLowerCase();
-    //     final searchLower = query.toLowerCase();
-    //     return nameLower.contains(searchLower);
-    //     //||serviceLower.contains(searchLower);
-    //   }).toList();
-    // }
-    // else {
-    //   showResults = List.from(_allResults);
-    // }
-    // setState(() {
-    //   _resultsList = showResults;
-    // });
   }
-
-
 
   //Search end
 
@@ -139,44 +109,38 @@ class _HomepageState extends State<Homepage> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          Container(
+            height: 42,
+            margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+              border: Border.all(color: Colors.black26),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: "search ...",
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    borderSide: BorderSide(color: Colors.blueGrey)),
-                prefixIcon: Icon(Icons.search),
+                border: InputBorder.none,
+                icon: Icon(Icons.search),
               ),
             ),
           ),
+
           Expanded(
             child: Container(
               color: Colors.grey[100],
-              child:
-            //   ListView.builder(
-            //     itemCount: _resultsList.length,
-            //     itemBuilder: (BuildContext context, int index) =>
-            //         ClientProductCard(clientProduct: _resultsList[index])
-            // ),
-
-              ListView.builder(
-                // itemCount: clients.length,
-                // itemBuilder: (context, int index) {
-                //   return ClientCard(client: clients[index]);}
+              child: ListView.builder(
                 itemCount: _resultsList.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
-                    child: ClientProductCard(
-                        clientProduct: _resultsList[index]),
+                    child: ClientProductCard(clientProduct: _resultsList[index]),
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-
-                          EditMap(map: clientprodListt[index]),
+                              EditMap(map: _resultsList[index]),
                         )),
                   );
                 },

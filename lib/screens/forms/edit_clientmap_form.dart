@@ -2,6 +2,9 @@ import 'package:attoform/models/clientprodmap.dart';
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:provider/provider.dart';
+import 'package:attoform/models/product.dart';
+import 'package:attoform/models/client.dart';
 
 class EditMap extends StatefulWidget {
   ClientProduct map;
@@ -149,8 +152,22 @@ class _EditMapState extends State<EditMap> {
 
   @override
   Widget build(BuildContext context) {
-    final clients = ['Anurag', 'Ashish', 'Mayank', 'Example', 'Example2'];
-    final items = ['Domain', 'Hosting', 'SSl', 'Email', 'Web'];
+
+    //to get client name list for dropdown in the form
+    final clientListt = Provider.of<List<Client>>(context);
+    List<String> clientnames = [];
+    clientListt.forEach((element) {
+      clientnames.add(element.name);
+    });
+
+    //to get product names list for dropdown ini the form
+
+    final productList = Provider.of<List<Product>>(context);
+    List<String> items = [];
+    productList.forEach((element) {
+      items.add(element.name);
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Client form"),
@@ -164,7 +181,7 @@ class _EditMapState extends State<EditMap> {
           padding: EdgeInsets.all(16),
           children: [
             const SizedBox(height: 16),
-            clientDrop(clients),
+            clientDrop(clientnames),
             const SizedBox(height: 16),
             productDrop(items),
             const SizedBox(height: 16),

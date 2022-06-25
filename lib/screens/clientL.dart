@@ -1,13 +1,10 @@
 import 'package:attoform/models/client.dart';
 import 'package:attoform/screens/forms/edit_client_form.dart';
-import 'package:attoform/screens/products.dart';
-import 'package:attoform/widget/client_product_card.dart';
 import 'package:attoform/screens/forms/add_client_form.dart';
 import 'package:attoform/widget/client_card.dart';
 import 'package:flutter/material.dart';
-import 'package:attoform/widget/search_widget.dart';
-import 'package:attoform/screens/notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ClientListing extends StatefulWidget {
   const ClientListing({Key? key}) : super(key: key);
@@ -17,37 +14,79 @@ class ClientListing extends StatefulWidget {
 }
 
 class _ClientListingState extends State<ClientListing> {
+
+  // Search Functionality
   String query = '';
-  late List<Client> clients;
+  Future? resultsLoaded;
+  List _allResults = [];
+  List _resultsList = [];
+  TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
 
-    clients = demoClientList;
+    _searchController.addListener(_onSearchChanged);
+
   }
 
-  Widget buildSearch() => SearchWidget(
-        text: query,
-        hintText: 'client name or service type',
-        onChanged: searchBook,
-      );
+  _onSearchChanged(){
+    searchResultsList();
+  }
 
-  void searchBook(String query) {
-    final clients = demoClientList.where((client) {
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    resultsLoaded = getClientM();
+  }
+
+  getClientM() async{
+    var data = await FirebaseFirestore.instance
+        .collection('Client Master')
+        .get();
+    setState(() {
+      _allResults = data.docs.map((doc) {
+        return Client(
+            uid: doc['uid'] ?? '',
+            name: doc['name'] ?? '',
+            email: doc['emailId'] ?? '',
+            phoneNumber: doc['phoneNumber'],
+            gstNo: doc['gstNo']
+        );
+      }).toList();
+    });
+    searchResultsList();
+    return "complete";
+  }
+
+  searchResultsList() {
+    // var showResults = [];
+    query = _searchController.text;
+    final _resultsList = _allResults.where((client) {
       final nameLower = client.name.toLowerCase();
-      //final serviceLower = client.service.toLowerCase();
+      // final serviceLower = client.product.toLowerCase();
       final searchLower = query.toLowerCase();
 
       return nameLower.contains(searchLower);
-      //||serviceLower.contains(searchLower);
+          // || serviceLower.contains(searchLower);
     }).toList();
-
     setState(() {
       this.query = query;
-      this.clients = clients;
+      this._resultsList = _resultsList;
     });
+
   }
+
+  //Search end
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,23 +105,38 @@ class _ClientListingState extends State<ClientListing> {
       ),
       body: Column(
         children: [
-          buildSearch(),
+          Container(
+            height: 42,
+            margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+              border: Border.all(color: Colors.black26),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: "search ...",
+                border: InputBorder.none,
+                icon: Icon(Icons.search),
+              ),
+            ),
+          ),
+
           Expanded(
             child: Container(
               color: Colors.grey[100],
               child: ListView.builder(
-                // itemCount: clients.length,
-                // itemBuilder: (context, int index) {
-                //   return ClientCard(client: clients[index]);}
-                itemCount: clientListt.length,
+                itemCount: _resultsList.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
-                    child: ClientCard(client: clientListt[index]),
+                    child: ClientCard(client: _resultsList[index]),
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              Editclient(client: clientListt[index]),
+                              Editclient(client: _resultsList[index]),
                         )),
                   );
                 },

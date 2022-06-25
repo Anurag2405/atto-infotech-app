@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 class ClientCard extends StatelessWidget {
   Client client;
   ClientCard({required this.client});
-  //const ClientCard({ Key? key }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

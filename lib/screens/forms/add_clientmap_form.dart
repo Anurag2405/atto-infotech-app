@@ -152,19 +152,13 @@ class _AddMapState extends State<AddMap> {
 
   @override
   Widget build(BuildContext context) {
+
     //to get client name list for dropdown in the form
     final clientListt = Provider.of<List<Client>>(context);
     List<String> clientnames = [];
     clientListt.forEach((element) {
       clientnames.add(element.name);
     });
-    clientnames.forEach((element) {
-      print(element);
-    });
-    // List<String> clients = clientListt.map((client){
-    //   client.name;
-    // });
-    // final clients = ['Anurag','Ashish','Mayank','Example','Example2'];
 
     //to get product names list for dropdown ini the form
 
@@ -173,10 +167,7 @@ class _AddMapState extends State<AddMap> {
     productList.forEach((element) {
       items.add(element.name);
     });
-    items.forEach((element) {
-      print(element);
-    });
-    //final items = ['Domain','Hosting','SSl','Email','Web'];
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Client form"),
