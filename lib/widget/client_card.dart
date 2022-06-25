@@ -1,5 +1,6 @@
 import 'package:attoform/models/client.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ClientCard extends StatelessWidget {
   Client client;
@@ -39,7 +40,11 @@ class ClientCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
+                  IconButton(
+                      onPressed: () {
+                        launchUrlString('tel:${client.phoneNumber}');
+                      },
+                      icon: Icon(Icons.phone)),
                 ],
               ),
             ),

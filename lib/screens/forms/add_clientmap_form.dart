@@ -1,3 +1,4 @@
+import 'package:attoform/models/product.dart';
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -17,76 +18,73 @@ class _AddMapState extends State<AddMap> {
   String? product;
   DateTime? expDate;
   String? price;
-  String note ="";
-
+  String note = "";
 
   Widget clientDrop(List<String> item) => DropdownSearch<String>(
-    popupProps: PopupProps.menu(
-      showSelectedItems: true,
-      showSearchBox: true,
-    ),
-    items: item,
-    validator: (String? item) {
-      if (item == null)
-        return "Required field";
-      else if (item == "Select a client")
-        return "Please select a client";
-      else
-        return null;
-    },
-    onChanged: (val){
-      name = val;
-    },
-    selectedItem: "Select a client",
-  );
+        popupProps: PopupProps.menu(
+          showSelectedItems: true,
+          showSearchBox: true,
+        ),
+        items: item,
+        validator: (String? item) {
+          if (item == null)
+            return "Required field";
+          else if (item == "Select a client")
+            return "Please select a client";
+          else
+            return null;
+        },
+        onChanged: (val) {
+          name = val;
+        },
+        selectedItem: "Select a client",
+      );
 
   Widget productDrop(List<String> item) => DropdownSearch<String>(
-    popupProps: PopupProps.menu(
-      showSelectedItems: true,
-      showSearchBox: true,
-    ),
-    items: item,
-    validator: (String? item) {
-      if (item == null)
-        return "Required field";
-      else if (item == "Select a product")
-        return "Please select a product";
-      else
-        return null;
-    },
-    onChanged: (val){
-      product = val;
-    },
-    selectedItem: "Select a product",
-  );
-
-
+        popupProps: PopupProps.menu(
+          showSelectedItems: true,
+          showSearchBox: true,
+        ),
+        items: item,
+        validator: (String? item) {
+          if (item == null)
+            return "Required field";
+          else if (item == "Select a product")
+            return "Please select a product";
+          else
+            return null;
+        },
+        onChanged: (val) {
+          product = val;
+        },
+        selectedItem: "Select a product",
+      );
 
   Widget buildexp() => Container(
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.grey),
-      borderRadius: BorderRadius.circular(4),
-    ),
-    child: ListTile(
-      title: Text(
-        expDate == null ? "Pick the expiry date" : expDate.toString(),
-        style: TextStyle(color: Colors.grey[600]),
-      ),
-      trailing: Icon(Icons.calendar_month_outlined),
-      onTap: () {
-        showDatePicker(
-          context: context,
-          firstDate: DateTime(2015),
-          lastDate: DateTime(2099),
-          initialDate: expDate == null ? DateTime.now() : expDate!,
-        ).then((date) {
-          setState(() {
-            expDate = date;
-          });
-        });
-      },
-    ),
-  );
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: ListTile(
+          title: Text(
+            expDate == null ? "Pick the expiry date" : expDate.toString(),
+            style: TextStyle(color: Colors.grey[600]),
+          ),
+          trailing: Icon(Icons.calendar_month_outlined),
+          onTap: () {
+            showDatePicker(
+              context: context,
+              firstDate: DateTime(2015),
+              lastDate: DateTime(2099),
+              initialDate: expDate == null ? DateTime.now() : expDate!,
+            ).then((date) {
+              setState(() {
+                expDate = date;
+              });
+            });
+          },
+        ),
+      );
 
   Widget buildPrice() => TextFormField(
       decoration: InputDecoration(
@@ -102,9 +100,8 @@ class _AddMapState extends State<AddMap> {
         }
       },
       onChanged: (value) => setState(() {
-        price = value;
-      }));
-
+            price = value;
+          }));
 
   Widget buildnote() => TextFormField(
       decoration: InputDecoration(
@@ -113,50 +110,49 @@ class _AddMapState extends State<AddMap> {
         suffixIcon: Icon(Icons.note_add_rounded),
       ),
       onChanged: (value) => setState(() {
-        note = value;
-      }));
-
-
-
-
+            note = value;
+          }));
 
   Widget buildSubmit() => SizedBox(
-    height: 50,
-    child: ElevatedButton(
-      // style:  ElevatedButton.styleFrom(primary: Colors.green),
-      child: Text(
-        "Submit",
-        style: TextStyle(fontSize: 24),
-      ),
-      onPressed: () {
-        final isValid = formKey.currentState!.validate();
-        if (isValid) {
-          // print(name);
-          // print(product);
-          // print(expDate);
-          // print(price);
+        height: 50,
+        child: ElevatedButton(
+          // style:  ElevatedButton.styleFrom(primary: Colors.green),
+          child: Text(
+            "Submit",
+            style: TextStyle(fontSize: 24),
+          ),
+          onPressed: () {
+            final isValid = formKey.currentState!.validate();
+            if (isValid) {
+              // print(name);
+              // print(product);
+              // print(expDate);
+              // print(price);
 
-          DatabaseService().createClientProductMaster(
-              name.toString(), "123", product.toString(), price.toString(), expDate.toString(), note).then((value) => {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('Map Added!'),
-              ),
-            ),
-            Navigator.pop(context),
-          });
-
-
-        }
-      },
-    ),
-  );
-
-
-
+              DatabaseService()
+                  .createClientProductMaster(
+                      name.toString(),
+                      "123",
+                      product.toString(),
+                      price.toString(),
+                      expDate.toString(),
+                      note)
+                  .then((value) => {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('Map Added!'),
+                          ),
+                        ),
+                        Navigator.pop(context),
+                      });
+            }
+          },
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
+    //to get client name list for dropdown in the form
     final clientListt = Provider.of<List<Client>>(context);
     List<String> clientnames = [];
     clientListt.forEach((element) {
@@ -169,7 +165,18 @@ class _AddMapState extends State<AddMap> {
     //   client.name;
     // });
     // final clients = ['Anurag','Ashish','Mayank','Example','Example2'];
-    final items = ['Domain','Hosting','SSl','Email','Web'];
+
+    //to get product names list for dropdown ini the form
+
+    final productList = Provider.of<List<Product>>(context);
+    List<String> items = [];
+    productList.forEach((element) {
+      items.add(element.name);
+    });
+    items.forEach((element) {
+      print(element);
+    });
+    //final items = ['Domain','Hosting','SSl','Email','Web'];
     return Scaffold(
       appBar: AppBar(
         title: Text("Client form"),
