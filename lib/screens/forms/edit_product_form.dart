@@ -1,8 +1,6 @@
 import 'package:attoform/models/product.dart';
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:attoform/screens/mainpage.dart';
 class EditProduct extends StatefulWidget {
   Product product;
   EditProduct({required this.product});

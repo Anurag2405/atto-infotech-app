@@ -1,4 +1,3 @@
-import 'package:attoform/models/client.dart';
 import 'package:attoform/models/clientprodmap.dart';
 import 'package:flutter/material.dart';
 

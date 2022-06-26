@@ -1,7 +1,6 @@
 import 'package:attoform/models/client.dart';
 import 'package:attoform/models/product.dart';
 import 'package:attoform/models/clientprodmap.dart';
-import 'package:attoform/widget/client_product_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
