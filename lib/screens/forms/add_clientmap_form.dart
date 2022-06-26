@@ -132,7 +132,6 @@ class _AddMapState extends State<AddMap> {
               DatabaseService()
                   .createClientProductMaster(
                       name.toString(),
-                      "123",
                       product.toString(),
                       price.toString(),
                       expDate.toString(),

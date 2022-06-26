@@ -5,6 +5,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:provider/provider.dart';
 import 'package:attoform/models/product.dart';
 import 'package:attoform/models/client.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class EditMap extends StatefulWidget {
   ClientProduct map;
@@ -137,7 +138,7 @@ class _EditMapState extends State<EditMap> {
 
 
               DatabaseService().updateclientProductMaster(
-                  widget.map.uid, name.toString(), "phoneNumber", product.toString(), price.toString(), expDate.toString(), note.toString()).then((value) => {
+                  widget.map.uid, name.toString(), product.toString(), price.toString(), expDate.toString(), note.toString()).then((value) => {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text('Map Edited!'),
@@ -156,8 +157,10 @@ class _EditMapState extends State<EditMap> {
     //to get client name list for dropdown in the form
     final clientListt = Provider.of<List<Client>>(context);
     List<String> clientnames = [];
+    List<String> clientphonenumbers = [];
     clientListt.forEach((element) {
       clientnames.add(element.name);
+      clientphonenumbers.add(element.phoneNumber);
     });
 
     //to get product names list for dropdown ini the form

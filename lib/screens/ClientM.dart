@@ -58,7 +58,6 @@ class _HomepageState extends State<Homepage> {
         return ClientProduct(
             uid: doc['uid'] ?? '',
             name: doc['name'] ?? '',
-            phoneNumber: doc['phoneNumber'],
             product: doc['product'] ?? '',
             price: doc['price'] ?? '',
             dateOfExpiry: doc['expDate'] ?? '',

@@ -61,13 +61,12 @@ class DatabaseService {
   ///Client-Product mapped functions
 
 //to map client to product  --->> floating action button -->>submit button
-  Future createClientProductMaster(String name, String phoneNumber,
+  Future createClientProductMaster(String name,
       String product, String price, String dateOfExpiry, String note) async {
     var v4 = uuid.v4();
     return await _clientProductMaster.doc(v4).set({
       'uid': v4,
       'name': name,
-      'phoneNumber': phoneNumber,
       'product': product,
       'price': price,
       'expDate': dateOfExpiry,
@@ -78,12 +77,11 @@ class DatabaseService {
   //update the clientProduct master eg expDate
 
   Future updateclientProductMaster(
-      String v4, String name, String phoneNumber,
+      String v4, String name,
       String product, String price, String dateOfExpiry, String note) async {
     return await _clientProductMaster.doc(v4).set({
       'uid': v4,
       'name': name,
-      'phoneNumber': phoneNumber,
       'product': product,
       'price': price,
       'expDate': dateOfExpiry,
@@ -136,7 +134,6 @@ class DatabaseService {
       return ClientProduct(
           uid: doc['uid'] ?? '',
           name: doc['name'] ?? '',
-          phoneNumber: doc['phoneNumber'],
           product: doc['product'] ?? '',
           price: doc['price'] ?? '',
           dateOfExpiry: doc['expDate'] ?? '',
