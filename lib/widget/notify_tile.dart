@@ -28,7 +28,7 @@ class NotifyTile extends StatelessWidget {
                     Row(
                       children: [
                         Text("Service about to expire on: "),
-                        Text(notification.expDate,style: TextStyle(fontWeight: FontWeight.bold),),
+                        Text(notification.dateOfExpiry,style: TextStyle(fontWeight: FontWeight.bold),),
                       ],
                     ),
                   ],
@@ -45,7 +45,7 @@ class NotifyTile extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Text(notification.serviceType),
+                        child: Text(notification.product),
                       )),
                   ],
                 ),

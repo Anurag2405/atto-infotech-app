@@ -91,6 +91,9 @@ class _EditProductState extends State<EditProduct> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0.0,
+        actions: [
+          IconButton(onPressed: (){DatabaseService().deleteProduct(widget.product.uid);}, icon: Icon(Icons.delete,color: Colors.black54,)),
+        ],
       ),
       body: Form(
         key: formKey,

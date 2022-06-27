@@ -105,12 +105,6 @@ class _InfoformState extends State<Infoform> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text('Client Added!'),
-                    // action: SnackBarAction(
-                    //   label: 'Action',
-                    //   onPressed: () {
-                    //     // Code to execute.
-                    //   },
-                    // ),
                   ),
                 ),
                 Navigator.pop(context),

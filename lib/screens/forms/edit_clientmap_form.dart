@@ -5,7 +5,6 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:provider/provider.dart';
 import 'package:attoform/models/product.dart';
 import 'package:attoform/models/client.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class EditMap extends StatefulWidget {
   ClientProduct map;
@@ -19,7 +18,7 @@ class _EditMapState extends State<EditMap> {
   final formKey = GlobalKey<FormState>();
   String? name;
   String? product;
-  DateTime? expDate;
+  DateTime? dateOfExpiry;
   String? price;
   String? note;
 
@@ -71,7 +70,7 @@ class _EditMapState extends State<EditMap> {
         ),
         child: ListTile(
           title: Text(
-            expDate == null ? widget.map.dateOfExpiry : expDate.toString(),
+            dateOfExpiry == null ? widget.map.dateOfExpiry : dateOfExpiry.toString(),
             style: TextStyle(color: Colors.grey[600]),
           ),
           trailing: Icon(Icons.calendar_month_outlined),
@@ -80,10 +79,10 @@ class _EditMapState extends State<EditMap> {
               context: context,
               firstDate: DateTime(2015),
               lastDate: DateTime(2099),
-              initialDate: expDate == null ? DateTime.now() : expDate!,
+              initialDate: dateOfExpiry == null ? DateTime.now() : dateOfExpiry!,
             ).then((date) {
               setState(() {
-                expDate = date;
+                dateOfExpiry = date;
               });
             });
           },
@@ -132,13 +131,13 @@ class _EditMapState extends State<EditMap> {
             if (isValid) {
               name ??= widget.map.name;
               price ??= widget.map.price;
-              expDate ??= DateTime.parse(widget.map.dateOfExpiry);
+              dateOfExpiry ??= DateTime.parse(widget.map.dateOfExpiry);
               product ??= widget.map.product;
               note ??= widget.map.note;
 
 
-              DatabaseService().updateclientProductMaster(
-                  widget.map.uid, name.toString(), product.toString(), price.toString(), expDate.toString(), note.toString()).then((value) => {
+              DatabaseService().updateClientProductMaster(
+                  widget.map.uid, name.toString(), product.toString(), price.toString(), dateOfExpiry.toString(), note.toString()).then((value) => {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text('Map Edited!'),
@@ -173,10 +172,24 @@ class _EditMapState extends State<EditMap> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Client form"),
+        title: Text("Edit Client Product Mapping"),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0.0,
+        actions: [
+          IconButton(onPressed: (){
+            print("deleted");
+            DatabaseService().deleteClientProduct(widget.map.uid).then((value) => {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('${widget.map.name} - ${widget.map.product} Removed!'),
+                ),
+              ),
+              Navigator.pop(context),
+              // Navigator.of(context).pushReplacement(
+              //     MaterialPageRoute(builder: (context) => Mainpage())),
+            });}, icon: Icon(Icons.delete,color: Colors.black54,)),
+        ],
       ),
       body: Form(
         key: formKey,

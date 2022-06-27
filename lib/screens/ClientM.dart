@@ -60,7 +60,7 @@ class _HomepageState extends State<Homepage> {
             name: doc['name'] ?? '',
             product: doc['product'] ?? '',
             price: doc['price'] ?? '',
-            dateOfExpiry: doc['expDate'] ?? '',
+            dateOfExpiry: doc['dateOfExpiry'] ?? '',
             note: doc['note'] ?? ''
         );
       }).toList();

@@ -16,7 +16,7 @@ class _AddMapState extends State<AddMap> {
   final formKey = GlobalKey<FormState>();
   String? name;
   String? product;
-  DateTime? expDate;
+  DateTime? dateOfExpiry;
   String? price;
   String note = "";
 
@@ -67,7 +67,7 @@ class _AddMapState extends State<AddMap> {
         ),
         child: ListTile(
           title: Text(
-            expDate == null ? "Pick the expiry date" : expDate.toString(),
+            dateOfExpiry == null ? "Pick the expiry date" : dateOfExpiry.toString(),
             style: TextStyle(color: Colors.grey[600]),
           ),
           trailing: Icon(Icons.calendar_month_outlined),
@@ -76,10 +76,10 @@ class _AddMapState extends State<AddMap> {
               context: context,
               firstDate: DateTime(2015),
               lastDate: DateTime(2099),
-              initialDate: expDate == null ? DateTime.now() : expDate!,
+              initialDate: dateOfExpiry == null ? DateTime.now() : dateOfExpiry!,
             ).then((date) {
               setState(() {
-                expDate = date;
+                dateOfExpiry = date;
               });
             });
           },
@@ -126,7 +126,7 @@ class _AddMapState extends State<AddMap> {
             if (isValid) {
               // print(name);
               // print(product);
-              // print(expDate);
+              // print(dateOfExpiry);
               // print(price);
 
               DatabaseService()
@@ -134,7 +134,7 @@ class _AddMapState extends State<AddMap> {
                       name.toString(),
                       product.toString(),
                       price.toString(),
-                      expDate.toString(),
+                      dateOfExpiry.toString(),
                       note)
                   .then((value) => {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -169,7 +169,7 @@ class _AddMapState extends State<AddMap> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Client form"),
+        title: Text("Client Profuct Mapping"),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0.0,

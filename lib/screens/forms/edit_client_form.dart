@@ -82,7 +82,7 @@ class _EditclientState extends State<Editclient> {
       decoration: InputDecoration(
         labelText: "GST number",
         border: OutlineInputBorder(),
-        suffixIcon: Icon(Icons.person),
+        suffixIcon: Icon(Icons.g_mobiledata_rounded,size: 35,),
       ),
       validator: (value) {
         if (value!.length < 1) {
@@ -135,6 +135,18 @@ class _EditclientState extends State<Editclient> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0.0,
+        actions: [
+          IconButton(onPressed: (){DatabaseService().deleteClient(widget.client.uid).then((value) => {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${widget.client.name} Removed!'),
+              ),
+            ),
+            Navigator.pop(context),
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(builder: (context) => Mainpage())),
+          });}, icon: Icon(Icons.delete,color: Colors.black54,)),
+        ],
       ),
       body: Form(
         key: formKey,

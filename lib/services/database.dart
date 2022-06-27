@@ -1,7 +1,9 @@
 import 'package:attoform/models/client.dart';
+import 'package:attoform/models/notification.dart';
 import 'package:attoform/models/product.dart';
 import 'package:attoform/models/clientprodmap.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseService {
@@ -13,6 +15,8 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('Product Master');
   final CollectionReference _clientProductMaster =
       FirebaseFirestore.instance.collection('Client Product Master');
+  final CollectionReference _notificationMaster =
+  FirebaseFirestore.instance.collection('Notifications');
 
   //create client master
   Future createClientMaster(String name, String emailId, String phoneNumber,
@@ -69,14 +73,14 @@ class DatabaseService {
       'name': name,
       'product': product,
       'price': price,
-      'expDate': dateOfExpiry,
+      'dateOfExpiry': dateOfExpiry,
       'note': note
     });
   }
 
-  //update the clientProduct master eg expDate
+  //update the clientProduct master eg dateOfExpiry
 
-  Future updateclientProductMaster(
+  Future updateClientProductMaster(
       String v4, String name,
       String product, String price, String dateOfExpiry, String note) async {
     return await _clientProductMaster.doc(v4).set({
@@ -84,12 +88,12 @@ class DatabaseService {
       'name': name,
       'product': product,
       'price': price,
-      'expDate': dateOfExpiry,
+      'dateOfExpiry': dateOfExpiry,
       'note': note
     });
+
+
   }
-
-
 
 
 //  Streams to fetch data
@@ -136,7 +140,7 @@ class DatabaseService {
           name: doc['name'] ?? '',
           product: doc['product'] ?? '',
           price: doc['price'] ?? '',
-          dateOfExpiry: doc['expDate'] ?? '',
+          dateOfExpiry: doc['dateOfExpiry'] ?? '',
           note: doc['note'] ?? ''
       );
     }).toList();
@@ -144,6 +148,40 @@ class DatabaseService {
 
   Stream<List<ClientProduct>> get clientProductMasterStream {
     return _clientProductMaster.snapshots().map(_clientProductListFromFirebaseCollection);
+  }
+
+  //fetch notification details from firestore using streams
+  List<Notify> _notificationListFromFirebaseCollection(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Notify(
+        name: doc['name'] ?? '',
+        product: doc['product'] ?? '',
+        dateOfExpiry: doc['dateOfExpiry']
+      );
+    }).toList();
+  }
+
+  Stream<List<Notify>> get notificationMasterStream {
+    return _notificationMaster.snapshots().map(_notificationListFromFirebaseCollection);
+  }
+
+  //to delete the documents/cards from firebase
+
+  Future<void> deleteClientProduct(String v4) async {
+    return await _clientProductMaster
+        .doc(v4)
+        .delete();
+  }
+
+  Future<void> deleteClient(String v4) async {
+    return await _clientMaster
+        .doc(v4)
+        .delete();
+  }
+  Future<void> deleteProduct(String v4) async {
+    return await _productsMaster
+        .doc(v4)
+        .delete();
   }
 
 }
