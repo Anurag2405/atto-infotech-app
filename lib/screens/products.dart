@@ -34,7 +34,7 @@ class _ProductsMasterState extends State<ProductsMaster> {
                   child: ProductCard(product: productList[index]),
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(
-                      builder: (context) => EditProduct(product: productList[index]),
+                      builder: (context) => EditProductForm(product: productList[index]),
                     )) ,
               );
             }),
@@ -43,7 +43,7 @@ class _ProductsMasterState extends State<ProductsMaster> {
         heroTag: "btn2",
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Prodform()));
+              MaterialPageRoute(builder: (context) => const AddProductForm()));
         },
         backgroundColor: Colors.white,
         child: const Icon(

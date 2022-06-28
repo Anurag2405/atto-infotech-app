@@ -1,21 +1,19 @@
-import 'package:attoform/models/clientprodmap.dart';
-import 'package:attoform/screens/forms/add_clientmap_form.dart';
-import 'package:attoform/screens/forms/edit_clientmap_form.dart';
-import 'package:attoform/widget/client_product_card.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:attoform/models/client.dart';
+import 'package:attoform/screens/forms/edit_client_form.dart';
+import 'package:attoform/screens/forms/add_client_form.dart';
+import 'package:attoform/widget/client_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+class ClientListing extends StatefulWidget {
+  const ClientListing({Key? key}) : super(key: key);
 
   @override
-  State<Homepage> createState() => _HomepageState();
+  State<ClientListing> createState() => _ClientListingState();
 }
 
-class _HomepageState extends State<Homepage> {
-
-  // late List<ClientProduct> clientProduct;
+class _ClientListingState extends State<ClientListing> {
 
   // Search Functionality
   String query = '';
@@ -51,17 +49,16 @@ class _HomepageState extends State<Homepage> {
 
   getClientM() async{
     var data = await FirebaseFirestore.instance
-        .collection('Client Product Master')
+        .collection('Client Master')
         .get();
     setState(() {
       _allResults = data.docs.map((doc) {
-        return ClientProduct(
+        return Client(
             uid: doc['uid'] ?? '',
             name: doc['name'] ?? '',
-            product: doc['product'] ?? '',
-            price: doc['price'] ?? '',
-            dateOfExpiry: doc['dateOfExpiry'] ?? '',
-            note: doc['note'] ?? ''
+            email: doc['emailId'] ?? '',
+            phoneNumber: doc['phoneNumber'],
+            gstNo: doc['gstNo']
         );
       }).toList();
     });
@@ -72,16 +69,14 @@ class _HomepageState extends State<Homepage> {
   searchResultsList() {
     // var showResults = [];
     query = _searchController.text;
-
     final _resultsList = _allResults.where((client) {
       final nameLower = client.name.toLowerCase();
-      final serviceLower = client.product.toLowerCase();
+      // final serviceLower = client.product.toLowerCase();
       final searchLower = query.toLowerCase();
 
-      return nameLower.contains(searchLower)
-      || serviceLower.contains(searchLower);
+      return nameLower.contains(searchLower);
+          // || serviceLower.contains(searchLower);
     }).toList();
-
     setState(() {
       this.query = query;
       this._resultsList = _resultsList;
@@ -92,15 +87,17 @@ class _HomepageState extends State<Homepage> {
   //Search end
 
 
+
   @override
   Widget build(BuildContext context) {
     //actively listening to stream of return type Clients
-    final clientprodListt = Provider.of<List<ClientProduct>>(context);
+    final clientListt = Provider.of<List<Client>>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          'Atto Infotech',
+          'Client Listing',
         ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -134,12 +131,12 @@ class _HomepageState extends State<Homepage> {
                 itemCount: _resultsList.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
-                    child: ClientProductCard(clientProduct: _resultsList[index]),
+                    child: ClientCard(client: _resultsList[index]),
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              EditMap(map: _resultsList[index]),
+                              Editclient(client: _resultsList[index]),
                         )),
                   );
                 },
@@ -149,10 +146,10 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        heroTag: "btn1",
+        heroTag: "btn3",
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const AddMap()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddClientForm()));
         },
         backgroundColor: Colors.white,
         child: const Icon(

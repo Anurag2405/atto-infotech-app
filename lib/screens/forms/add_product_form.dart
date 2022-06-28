@@ -1,14 +1,14 @@
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
 
-class Prodform extends StatefulWidget {
-  const Prodform({Key? key}) : super(key: key);
+class AddProductForm extends StatefulWidget {
+  const AddProductForm({Key? key}) : super(key: key);
 
   @override
-  State<Prodform> createState() => _ProdformState();
+  State<AddProductForm> createState() => _AddProductFormState();
 }
 
-class _ProdformState extends State<Prodform> {
+class _AddProductFormState extends State<AddProductForm> {
   final formKey = GlobalKey<FormState>();
   String name = '';
   String price = '';

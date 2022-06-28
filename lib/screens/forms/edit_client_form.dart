@@ -78,11 +78,14 @@ class _EditclientState extends State<Editclient> {
       );
 
   Widget buildgst() => TextFormField(
-    initialValue: widget.client.gstNo,
+      initialValue: widget.client.gstNo,
       decoration: InputDecoration(
         labelText: "GST number",
         border: OutlineInputBorder(),
-        suffixIcon: Icon(Icons.g_mobiledata_rounded,size: 35,),
+        suffixIcon: Icon(
+          Icons.g_mobiledata_rounded,
+          size: 35,
+        ),
       ),
       validator: (value) {
         if (value!.length < 1) {
@@ -92,8 +95,8 @@ class _EditclientState extends State<Editclient> {
         }
       },
       onChanged: (value) => setState(() {
-        gstNo = value;
-      }));
+            gstNo = value;
+          }));
 
   Widget buildSubmit() => SizedBox(
         height: 50,
@@ -112,8 +115,12 @@ class _EditclientState extends State<Editclient> {
               gstNo ??= widget.client.gstNo;
 
               DatabaseService()
-                  .updateClientMaster(widget.client.uid, name.toString(),
-                      emailId.toString(), phoneNumber.toString(),gstNo.toString())
+                  .updateClientMaster(
+                      widget.client.uid,
+                      name.toString(),
+                      emailId.toString(),
+                      phoneNumber.toString(),
+                      gstNo.toString())
                   .then((value) => {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -131,21 +138,30 @@ class _EditclientState extends State<Editclient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Client form"),
+        title: Text("Edit Client form"),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0.0,
         actions: [
-          IconButton(onPressed: (){DatabaseService().deleteClient(widget.client.uid).then((value) => {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${widget.client.name} Removed!'),
-              ),
-            ),
-            Navigator.pop(context),
-            // Navigator.of(context).pushReplacement(
-            //     MaterialPageRoute(builder: (context) => Mainpage())),
-          });}, icon: Icon(Icons.delete,color: Colors.black54,)),
+          IconButton(
+              onPressed: () {
+                DatabaseService()
+                    .deleteClient(widget.client.uid)
+                    .then((value) => {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${widget.client.name} Removed!'),
+                            ),
+                          ),
+                          Navigator.pop(context),
+                          // Navigator.of(context).pushReplacement(
+                          //     MaterialPageRoute(builder: (context) => Mainpage())),
+                        });
+              },
+              icon: Icon(
+                Icons.delete,
+                color: Colors.black54,
+              )),
         ],
       ),
       body: Form(

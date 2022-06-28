@@ -1,14 +1,14 @@
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
 
-class Infoform extends StatefulWidget {
-  const Infoform({Key? key}) : super(key: key);
+class AddClientForm extends StatefulWidget {
+  const AddClientForm({Key? key}) : super(key: key);
 
   @override
-  State<Infoform> createState() => _InfoformState();
+  State<AddClientForm> createState() => _AddClientFormState();
 }
 
-class _InfoformState extends State<Infoform> {
+class _AddClientFormState extends State<AddClientForm> {
   final formKey = GlobalKey<FormState>();
   String name = '';
   String emailId = '';

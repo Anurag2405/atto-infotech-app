@@ -1,19 +1,21 @@
-import 'package:attoform/models/client.dart';
-import 'package:attoform/screens/forms/edit_client_form.dart';
-import 'package:attoform/screens/forms/add_client_form.dart';
-import 'package:attoform/widget/client_card.dart';
+import 'package:attoform/models/clientprodmap.dart';
+import 'package:attoform/screens/forms/add_clientmap_form.dart';
+import 'package:attoform/screens/forms/edit_clientmap_form.dart';
+import 'package:attoform/widget/client_product_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ClientListing extends StatefulWidget {
-  const ClientListing({Key? key}) : super(key: key);
+class Homepage extends StatefulWidget {
+  const Homepage({Key? key}) : super(key: key);
 
   @override
-  State<ClientListing> createState() => _ClientListingState();
+  State<Homepage> createState() => _HomepageState();
 }
 
-class _ClientListingState extends State<ClientListing> {
+class _HomepageState extends State<Homepage> {
+
+  // late List<ClientProduct> clientProduct;
 
   // Search Functionality
   String query = '';
@@ -49,16 +51,17 @@ class _ClientListingState extends State<ClientListing> {
 
   getClientM() async{
     var data = await FirebaseFirestore.instance
-        .collection('Client Master')
+        .collection('Client Product Master')
         .get();
     setState(() {
       _allResults = data.docs.map((doc) {
-        return Client(
+        return ClientProduct(
             uid: doc['uid'] ?? '',
             name: doc['name'] ?? '',
-            email: doc['emailId'] ?? '',
-            phoneNumber: doc['phoneNumber'],
-            gstNo: doc['gstNo']
+            product: doc['product'] ?? '',
+            price: doc['price'] ?? '',
+            dateOfExpiry: doc['dateOfExpiry'] ?? '',
+            note: doc['note'] ?? ''
         );
       }).toList();
     });
@@ -69,14 +72,16 @@ class _ClientListingState extends State<ClientListing> {
   searchResultsList() {
     // var showResults = [];
     query = _searchController.text;
+
     final _resultsList = _allResults.where((client) {
       final nameLower = client.name.toLowerCase();
-      // final serviceLower = client.product.toLowerCase();
+      final serviceLower = client.product.toLowerCase();
       final searchLower = query.toLowerCase();
 
-      return nameLower.contains(searchLower);
-          // || serviceLower.contains(searchLower);
+      return nameLower.contains(searchLower)
+      || serviceLower.contains(searchLower);
     }).toList();
+
     setState(() {
       this.query = query;
       this._resultsList = _resultsList;
@@ -87,17 +92,15 @@ class _ClientListingState extends State<ClientListing> {
   //Search end
 
 
-
   @override
   Widget build(BuildContext context) {
     //actively listening to stream of return type Clients
-    final clientListt = Provider.of<List<Client>>(context);
-
+    final clientproductList = Provider.of<List<ClientProduct>>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          'Client Listing',
+          'Atto Infotech',
         ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -131,12 +134,12 @@ class _ClientListingState extends State<ClientListing> {
                 itemCount: _resultsList.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
-                    child: ClientCard(client: _resultsList[index]),
+                    child: ClientProductCard(clientProduct: _resultsList[index]),
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              Editclient(client: _resultsList[index]),
+                              EditMap(clientProduct: _resultsList[index]),
                         )),
                   );
                 },
@@ -146,10 +149,10 @@ class _ClientListingState extends State<ClientListing> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        heroTag: "btn3",
+        heroTag: "btn1",
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Infoform()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const AddMap()));
         },
         backgroundColor: Colors.white,
         child: const Icon(

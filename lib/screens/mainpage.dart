@@ -1,6 +1,6 @@
-import 'package:attoform/screens/clientL.dart';
+import 'package:attoform/screens/client_listing_page.dart';
 import 'package:flutter/material.dart';
-import 'package:attoform/screens/ClientM.dart';
+import 'package:attoform/screens/client_product_map_page.dart';
 import 'package:attoform/screens/products.dart';
 import 'package:attoform/screens/notifications.dart';
 

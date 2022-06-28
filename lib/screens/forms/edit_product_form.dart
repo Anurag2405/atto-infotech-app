@@ -1,15 +1,15 @@
 import 'package:attoform/models/product.dart';
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
-class EditProduct extends StatefulWidget {
+class EditProductForm extends StatefulWidget {
   Product product;
-  EditProduct({required this.product});
+  EditProductForm({required this.product});
 
   @override
-  State<EditProduct> createState() => _EditProductState();
+  State<EditProductForm> createState() => _EditProductFormState();
 }
 
-class _EditProductState extends State<EditProduct> {
+class _EditProductFormState extends State<EditProductForm> {
   final formKey = GlobalKey<FormState>();
   String? name;
   String? price;

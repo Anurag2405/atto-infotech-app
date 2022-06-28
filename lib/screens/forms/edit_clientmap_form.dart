@@ -7,8 +7,8 @@ import 'package:attoform/models/product.dart';
 import 'package:attoform/models/client.dart';
 
 class EditMap extends StatefulWidget {
-  ClientProduct map;
-  EditMap({required this.map});
+  ClientProduct clientProduct;
+  EditMap({required this.clientProduct});
 
   @override
   State<EditMap> createState() => _EditMapState();
@@ -40,7 +40,7 @@ class _EditMapState extends State<EditMap> {
         onChanged: (val) {
           name = val;
         },
-        selectedItem: widget.map.name,
+        selectedItem: widget.clientProduct.name,
       );
 
   Widget productDrop(List<String> item) => DropdownSearch<String>(
@@ -60,7 +60,7 @@ class _EditMapState extends State<EditMap> {
         onChanged: (val) {
           product = val;
         },
-        selectedItem: widget.map.product,
+        selectedItem: widget.clientProduct.product,
       );
 
   Widget buildexp() => Container(
@@ -70,7 +70,7 @@ class _EditMapState extends State<EditMap> {
         ),
         child: ListTile(
           title: Text(
-            dateOfExpiry == null ? widget.map.dateOfExpiry : dateOfExpiry.toString(),
+            dateOfExpiry == null ? widget.clientProduct.dateOfExpiry : dateOfExpiry.toString(),
             style: TextStyle(color: Colors.grey[600]),
           ),
           trailing: Icon(Icons.calendar_month_outlined),
@@ -90,7 +90,7 @@ class _EditMapState extends State<EditMap> {
       );
 
   Widget buildPrice() => TextFormField(
-      initialValue: widget.map.price,
+      initialValue: widget.clientProduct.price,
       decoration: InputDecoration(
         labelText: "Price",
         border: OutlineInputBorder(),
@@ -108,7 +108,7 @@ class _EditMapState extends State<EditMap> {
           }));
 
   Widget buildnote() => TextFormField(
-    initialValue: widget.map.note,
+    initialValue: widget.clientProduct.note,
       decoration: InputDecoration(
         labelText: "Note (optional)",
         border: OutlineInputBorder(),
@@ -129,15 +129,15 @@ class _EditMapState extends State<EditMap> {
           onPressed: () {
             final isValid = formKey.currentState!.validate();
             if (isValid) {
-              name ??= widget.map.name;
-              price ??= widget.map.price;
-              dateOfExpiry ??= DateTime.parse(widget.map.dateOfExpiry);
-              product ??= widget.map.product;
-              note ??= widget.map.note;
+              name ??= widget.clientProduct.name;
+              price ??= widget.clientProduct.price;
+              dateOfExpiry ??= DateTime.parse(widget.clientProduct.dateOfExpiry);
+              product ??= widget.clientProduct.product;
+              note ??= widget.clientProduct.note;
 
 
               DatabaseService().updateClientProductMaster(
-                  widget.map.uid, name.toString(), product.toString(), price.toString(), dateOfExpiry.toString(), note.toString()).then((value) => {
+                  widget.clientProduct.uid, name.toString(), product.toString(), price.toString(), dateOfExpiry.toString(), note.toString()).then((value) => {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: const Text('Map Edited!'),
@@ -179,10 +179,10 @@ class _EditMapState extends State<EditMap> {
         actions: [
           IconButton(onPressed: (){
             print("deleted");
-            DatabaseService().deleteClientProduct(widget.map.uid).then((value) => {
+            DatabaseService().deleteClientProduct(widget.clientProduct.uid).then((value) => {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('${widget.map.name} - ${widget.map.product} Removed!'),
+                  content: Text('${widget.clientProduct.name} - ${widget.clientProduct.product} Removed!'),
                 ),
               ),
               Navigator.pop(context),
