@@ -124,11 +124,6 @@ class _AddMapState extends State<AddMap> {
           onPressed: () {
             final isValid = formKey.currentState!.validate();
             if (isValid) {
-              // print(name);
-              // print(product);
-              // print(dateOfExpiry);
-              // print(price);
-
               DatabaseService()
                   .createClientProductMaster(
                       name.toString(),
@@ -169,7 +164,7 @@ class _AddMapState extends State<AddMap> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Client Profuct Mapping"),
+        title: Text("Client Product Mapping"),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0.0,

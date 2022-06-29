@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:attoform/widget/notify_card.dart';
-import 'package:attoform/models/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:attoform/models/clientprodmap.dart';
 
@@ -36,7 +35,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 0,
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.refresh))],
         ),
         body: ListView.builder(
             itemCount: notificationList.length,
