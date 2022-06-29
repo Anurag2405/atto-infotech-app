@@ -20,7 +20,7 @@ class DatabaseService {
   //create client master
   Future createClientMaster(String name, String emailId, String phoneNumber,
       String gstNo) async {
-    var v4 = uuid.v4();
+    var v4 = uuid.v1();
     // print(v4);
     // print(name);
     return await _clientMaster.doc(v4).set({
@@ -55,7 +55,7 @@ class DatabaseService {
   //create product in product master
   Future createProductMaster(String productName, String price) async {
     // print(productName);
-    var v4 = uuid.v4();
+    var v4 = uuid.v1();
     return await _productsMaster
         .doc(v4)
         .set({'uid': v4, 'name': productName, 'price': price});
@@ -66,7 +66,7 @@ class DatabaseService {
 //to map client to product  --->> floating action button -->>submit button
   Future createClientProductMaster(String name,
       String product, String price, String dateOfExpiry, String note) async {
-    var v4 = uuid.v4();
+    var v4 = uuid.v1();
     return await _clientProductMaster.doc(v4).set({
       'uid': v4,
       'name': name,
