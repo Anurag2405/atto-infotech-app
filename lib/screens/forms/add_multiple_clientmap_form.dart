@@ -14,7 +14,6 @@ class AddMaps extends StatefulWidget {
 }
 
 class _AddMapsState extends State<AddMaps> {
-  String? _result;
   String? name;
   List<FormItemWidget> clientProductForms = List.empty(growable: true);
 
@@ -48,8 +47,8 @@ class _AddMapsState extends State<AddMaps> {
 
     onRemove(ClientProduct clientprod) {
       setState(() {
-        int index = clientProductForms
-            .indexWhere((element) => element.clientProduct.uid == clientprod.uid);
+        int index = clientProductForms.indexWhere(
+            (element) => element.clientProduct.uid == clientprod.uid);
 
         if (clientProductForms != null) clientProductForms.removeAt(index);
       });
@@ -72,25 +71,44 @@ class _AddMapsState extends State<AddMaps> {
     }
 
     onSave() {
-      for (int i = 0; i < clientProductForms.length; i++) {
-        FormItemWidget item = clientProductForms[i];
-        // debugPrint("Name: ${item.clientProduct.product}");
-        // debugPrint("Name: ${item.clientProduct.price}");
-        // debugPrint("Name: ${item.clientProduct.dateOfExpiry}");
-        // debugPrint("Name: ${item.clientProduct.note}");
-        DatabaseService().createClientProductMaster(
-            name.toString(),
-            item.clientProduct.product.toString(),
-            item.clientProduct.price.toString(),
-            item.clientProduct.dateOfExpiry.toString(),
-            item.clientProduct.note);
+      bool allValid = true;
+
+      clientProductForms
+          .forEach((element) => allValid = (allValid && element.isValidated()));
+
+      if (name == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Please Add a client!'),
+          ),
+        );
+      } else {
+        if (clientProductForms.length != 0) {
+          if (allValid) {
+            for (int i = 0; i < clientProductForms.length; i++) {
+              FormItemWidget item = clientProductForms[i];
+              DatabaseService().createClientProductMaster(
+                  name.toString(),
+                  item.clientProduct.product.toString(),
+                  item.clientProduct.price.toString(),
+                  item.clientProduct.dateOfExpiry.toString(),
+                  item.clientProduct.note);
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Maps Added!'),
+              ),
+            );
+            Navigator.pop(context);
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Add atleast one product!'),
+            ),
+          );
+        }
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Maps Added!'),
-        ),
-      );
-      Navigator.pop(context);
     }
 
     return Scaffold(
@@ -131,23 +149,15 @@ class _AddMapsState extends State<AddMaps> {
             SizedBox(
               height: 16,
             ),
-            Flexible(
-              child: Builder(builder: (context) {
-                return ListView.builder(
-                    // shrinkWrap: true,
-                    // itemCount: _count,
-                    // itemBuilder: (context, index) {
-                    //   return FormItemWidget(clientProduct: ClientProduct);
-                    itemCount: clientProductForms.length,
-                    itemBuilder: (_, index) {
-                      return clientProductForms[index];
-                    });
-              }),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(_result ??= ""),
+            clientProductForms.isNotEmpty
+                ? Flexible(
+                    child: ListView.builder(
+                        itemCount: clientProductForms.length,
+                        itemBuilder: (_, index) {
+                          return clientProductForms[index];
+                        }),
+                  )
+                : Center(child: Text("Tap on + to Add Product")),
           ],
         ),
       ),

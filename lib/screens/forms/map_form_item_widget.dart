@@ -21,6 +21,8 @@ class FormItemWidget extends StatefulWidget {
   State<FormItemWidget> createState() {
     return this.state = new _FormItemWidgetState();
   }
+
+  bool isValidated() => state.validate();
 }
 
 class _FormItemWidgetState extends State<FormItemWidget> {
@@ -168,5 +170,12 @@ class _FormItemWidgetState extends State<FormItemWidget> {
         ),
       ),
     );
+  }
+
+  bool validate() {
+    //Validate Form Fields
+    bool validate = formKey.currentState!.validate();
+    if (validate) formKey.currentState!.save();
+    return validate;
   }
 }
