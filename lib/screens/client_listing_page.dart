@@ -96,6 +96,7 @@ class _ClientListingState extends State<ClientListing> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: Image.asset('assets/icon.png',),
         title: const Text(
           'Client Listing',
         ),

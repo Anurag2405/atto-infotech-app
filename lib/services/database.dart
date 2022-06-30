@@ -1,5 +1,4 @@
 import 'package:attoform/models/client.dart';
-import 'package:attoform/models/notification.dart';
 import 'package:attoform/models/product.dart';
 import 'package:attoform/models/clientprodmap.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -149,20 +148,7 @@ class DatabaseService {
     return _clientProductMaster.snapshots().map(_clientProductListFromFirebaseCollection);
   }
 
-  //fetch notification details from firestore using streams
-  List<Notify> _notificationListFromFirebaseCollection(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return Notify(
-        name: doc['name'] ?? '',
-        product: doc['product'] ?? '',
-        dateOfExpiry: doc['dateOfExpiry']
-      );
-    }).toList();
-  }
 
-  Stream<List<Notify>> get notificationMasterStream {
-    return _notificationMaster.snapshots().map(_notificationListFromFirebaseCollection);
-  }
 
   //to delete the documents/cards from firebase
 

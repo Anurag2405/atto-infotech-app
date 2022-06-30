@@ -99,6 +99,7 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: Image.asset('assets/icon.png',),
         title: const Text(
           'Atto Infotech',
         ),

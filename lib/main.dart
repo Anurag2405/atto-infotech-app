@@ -1,6 +1,5 @@
 import 'package:attoform/models/client.dart';
 import 'package:attoform/models/clientprodmap.dart';
-import 'package:attoform/models/notification.dart';
 import 'package:attoform/models/product.dart';
 import 'package:attoform/services/database.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +23,6 @@ Future<void> main() async {
         StreamProvider.value(
             value: DatabaseService().clientProductMasterStream,
             initialData: demoClientProductList),
-        StreamProvider.value(
-            value: DatabaseService().notificationMasterStream,
-            initialData: demoNotificationsList),
       ],
       child: MaterialApp(
         home: Mainpage(),
