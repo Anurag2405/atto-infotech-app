@@ -15,7 +15,6 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-
   // late List<ClientProduct> clientProduct;
 
   // Search Functionality
@@ -30,10 +29,9 @@ class _HomepageState extends State<Homepage> {
     super.initState();
 
     _searchController.addListener(_onSearchChanged);
-
   }
 
-  _onSearchChanged(){
+  _onSearchChanged() {
     searchResultsList();
   }
 
@@ -50,7 +48,7 @@ class _HomepageState extends State<Homepage> {
     resultsLoaded = getClientM();
   }
 
-  getClientM() async{
+  getClientM() async {
     var data = await FirebaseFirestore.instance
         .collection('Client Product Master')
         .get();
@@ -62,8 +60,7 @@ class _HomepageState extends State<Homepage> {
             product: doc['product'] ?? '',
             price: doc['price'] ?? '',
             dateOfExpiry: doc['dateOfExpiry'] ?? '',
-            note: doc['note'] ?? ''
-        );
+            note: doc['note'] ?? '');
       }).toList();
     });
     searchResultsList();
@@ -79,19 +76,17 @@ class _HomepageState extends State<Homepage> {
       final serviceLower = client.product.toLowerCase();
       final searchLower = query.toLowerCase();
 
-      return nameLower.contains(searchLower)
-      || serviceLower.contains(searchLower);
+      return nameLower.contains(searchLower) ||
+          serviceLower.contains(searchLower);
     }).toList();
 
     setState(() {
       this.query = query;
       this._resultsList = _resultsList;
     });
-
   }
 
   //Search end
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +97,11 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.fromLTRB(10, 15, 0, 15),
-          child: Image.asset('assets/icon.png',
-            width: 20, height: 20,),
+          child: Image.asset(
+            'assets/icon.png',
+            width: 20,
+            height: 20,
+          ),
         ),
         title: const Text(
           'Atto Infotech',
@@ -126,13 +124,12 @@ class _HomepageState extends State<Homepage> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: "search ...",
+                hintText: "search client or product...",
                 border: InputBorder.none,
                 icon: Icon(Icons.search),
               ),
             ),
           ),
-
           Expanded(
             child: Container(
               color: Colors.grey[100],
@@ -140,7 +137,8 @@ class _HomepageState extends State<Homepage> {
                 itemCount: _resultsList.length,
                 itemBuilder: (context, int index) {
                   return InkWell(
-                    child: ClientProductCard(clientProduct: _resultsList[index]),
+                    child:
+                        ClientProductCard(clientProduct: _resultsList[index]),
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
