@@ -29,7 +29,7 @@ class ClientCard extends StatelessWidget {
                       Text(
                         client.name,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                            fontWeight: FontWeight.w700, fontSize: 16),
                       ),
                       SizedBox(
                         height: 10,

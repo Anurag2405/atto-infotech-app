@@ -22,14 +22,14 @@ class NotifyTile extends StatelessWidget {
               children: [
                 Text(
                   notification.name,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
                 ),
                 SizedBox(height: 10),
                 Row(
                   children: [
-                    Text("expire on: "),
+                    Text("Expires on: "),
                     Text(
-                      notification.dateOfExpiry,
+                      notification.dateOfExpiry.substring(0, 10),
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],

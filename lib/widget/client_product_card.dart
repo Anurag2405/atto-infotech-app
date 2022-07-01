@@ -26,7 +26,7 @@ class ClientProductCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  clientProduct.dateOfExpiry,
+                    "Expires on: "+clientProduct.dateOfExpiry.substring(0,10),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 SizedBox(height: 20),

@@ -27,6 +27,7 @@ class FormItemWidget extends StatefulWidget {
 
 class _FormItemWidgetState extends State<FormItemWidget> {
   final formKey = GlobalKey<FormState>();
+  DateTime? dateOfExp ;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +114,7 @@ class _FormItemWidgetState extends State<FormItemWidget> {
                     title: Text(
                       widget.clientProduct.dateOfExpiry == ""
                           ? "Pick the expiry date"
-                          : widget.clientProduct.dateOfExpiry.toString(),
+                          : widget.clientProduct.dateOfExpiry,
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                     trailing: Icon(Icons.calendar_month_outlined),
@@ -122,12 +123,11 @@ class _FormItemWidgetState extends State<FormItemWidget> {
                         context: context,
                         firstDate: DateTime(2015),
                         lastDate: DateTime(2099),
-                        initialDate: {widget.clientProduct.dateOfExpiry} == ""
-                            ? DateTime.now()
-                            : DateTime.parse(widget.clientProduct.dateOfExpiry),
+                        initialDate: dateOfExp == null ? DateTime.now() : dateOfExp!,
                       ).then((date) {
                         setState(() {
-                          widget.clientProduct.dateOfExpiry = date.toString();
+                          dateOfExp = date;
+                          widget.clientProduct.dateOfExpiry = dateOfExp.toString();
                         });
                       });
                     },

@@ -1,5 +1,6 @@
 import 'package:attoform/models/clientprodmap.dart';
 import 'package:attoform/screens/forms/add_multiple_clientmap_form.dart';
+import 'package:attoform/screens/forms/add_one_clientmap_form.dart';
 import 'package:attoform/screens/forms/edit_clientmap_form.dart';
 import 'package:attoform/widget/client_product_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -99,7 +100,11 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: Image.asset('assets/icon.png',),
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 15, 0, 15),
+          child: Image.asset('assets/icon.png',
+            width: 20, height: 20,),
+        ),
         title: const Text(
           'Atto Infotech',
         ),
